@@ -1,0 +1,27 @@
+# Set the base image to the official PHP 8.0 image
+FROM php:8.0-fpm
+
+# Set the working directory to /var/www
+WORKDIR /var/www
+
+# Install required PHP extensions
+RUN docker-php-ext-install pdo_mysql
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Copy the Laravel application files to the container
+COPY ./backend /var/www
+
+# Install application dependencies with Composer
+RUN composer install --no-dev --no-scripts --no-progress --prefer-dist --optimize-autoloader
+
+# Set permissions for storage and bootstrap/cache directories
+RUN chgrp -R www-data storage bootstrap/cache
+RUN chmod -R ug+rwx storage bootstrap/cache
+
+# Expose port 9000 for PHP-FPM
+EXPOSE 9000
+
+# Start the PHP-FPM server
+CMD ["php-fpm"]
