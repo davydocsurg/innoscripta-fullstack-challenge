@@ -24,8 +24,21 @@ RUN php artisan key:generate
 RUN chgrp -R www-data storage bootstrap/cache
 RUN chmod -R ug+rwx storage bootstrap/cache
 
+# set environment variables for mysql connection
+ENV DB_HOST=${DB_HOST}
+ENV DB_PORT=${DB_PORT}
+ENV DB_DATABASE=${DB_DATABASE}
+ENV DB_USERNAME=${DB_USERNAME}
+ENV DB_PASSWORD=${DB_PASSWORD}
+
+# Start the Laravel application
+# RUN php artisan serve --host=0.0.0.0 --port=8000
+
 # Expose port 8000 for PHP-FPM
 EXPOSE 8000
 
 # Start the PHP-FPM server
 CMD ["php-fpm"]
+
+# Start the Laravel application
+# CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

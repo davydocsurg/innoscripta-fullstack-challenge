@@ -15,7 +15,7 @@ services:
       - database
     networks:
       - innoscripta-network
-    command: php artisan serve --host=localhost --port=8000
+    # command: cd backend && php artisan serve --host=localhost --port=8000
 
   database:
     platform: linux/amd64 # for M1 Macs
@@ -24,11 +24,11 @@ services:
     environment:
       MYSQL_DATABASE: ${DB_DATABASE:-innoscripta}
       MYSQL_USER: ${DB_USERNAME:-root}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-root}
+      # MYSQL_PASSWORD: ${DB_PASSWORD:-root}
       MYSQL_PORT: ${MYSQL_PORT:-8889}
-      # MYSQL_ROOT_PASSWORD: root
-    ports:
-      - 8889:3306
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+    # ports:
+    #   - 8889:3306
     networks:
       - innoscripta-network
     volumes:
