@@ -2,7 +2,8 @@ version: "3"
 
 services:
   backend:
-    # build: ./backend
+    platform: linux/amd64 # for M1 Macs
+    build: ./backend
     image: innoscripta-backend
     container_name: innoscripta-backend
     restart: always
@@ -17,6 +18,7 @@ services:
     command: php artisan serve --host=localhost --port=8000
 
   database:
+    platform: linux/amd64 # for M1 Macs
     image: mysql:5.7
     container_name: innoscripta-database
     environment:
