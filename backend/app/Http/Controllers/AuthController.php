@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -86,5 +87,57 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
 
         $user->save();
+    }
+
+    /**
+     * Login a user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function login(Request $request)
+    {
+        $loginValidator = Validator::make($request->all(), [
+            'email' => 'required|email:filter',
+            'password' => 'required',
+        ]);
+        if ($loginValidator->fails()) {
+            return response([
+                'status' => false,
+                'errors' => $loginValidator->errors()->messages(),
+            ], 400);
+        }
+
+        $invalidCredentialsResponse = [
+            'status' => false,
+            'message' => 'Invalid Credentials',
+        ];
+
+        $email = $request->email;
+        $password = $request->password;
+
+        $user = User::where('email', $email)->first();
+        if (!$user) {
+            return response($invalidCredentialsResponse, 401);
+        }
+
+        if (!Hash::check($password, $user->password)) {
+            return response($invalidCredentialsResponse, 401);
+        }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        $data = [
+            'status' => true,
+            'message' => 'Login was successfully',
+            'token' => $token,
+            'token_type' => 'Bearer',
+            'token_expires' => Carbon::parse(
+                $token->token->expires_at
+            )->toDateTimeString(),
+            'user' => $user,
+        ];
+
+        return response($data, 200);
     }
 }
