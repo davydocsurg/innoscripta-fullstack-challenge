@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  backend:
+    build: ./backend
+    container_name: innoscripta-backend
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/var/www
+
+networks:
+  innoscripta-network:
+    driver: bridge

@@ -11,7 +11,7 @@ RUN docker-php-ext-install pdo_mysql
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Copy the Laravel application files to the container
-COPY ./backend /var/www
+COPY . /var/www
 
 # Install application dependencies with Composer
 RUN composer install --no-dev --no-scripts --no-progress --prefer-dist --optimize-autoloader
@@ -20,8 +20,8 @@ RUN composer install --no-dev --no-scripts --no-progress --prefer-dist --optimiz
 RUN chgrp -R www-data storage bootstrap/cache
 RUN chmod -R ug+rwx storage bootstrap/cache
 
-# Expose port 9000 for PHP-FPM
-EXPOSE 9000
+# Expose port 8000 for PHP-FPM
+EXPOSE 8000
 
 # Start the PHP-FPM server
 CMD ["php-fpm"]
