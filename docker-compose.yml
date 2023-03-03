@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+  backend:
+    platform: linux/amd64 # for M1 Macs
+    build: ./backend
+    image: innoscripta-backend
+    container_name: innoscripta-backend
+    restart: always
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/innoscripta
+    depends_on:
+      - database
+    networks:
+      - innoscripta-network
+    # command: cd backend && php artisan serve --host=localhost --port=8000
+
+  database:
+    platform: linux/amd64 # for M1 Macs
+    image: mysql:5.7
+    container_name: innoscripta-database
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-innoscripta}
+      MYSQL_USER: ${DB_USERNAME:-root}
+      # MYSQL_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_PORT: ${MYSQL_PORT:-8889}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+    # ports:
+    #   - 8889:3306
+    networks:
+      - innoscripta-network
+    volumes:
+      - innoscripta-database:/data/db
+      - innoscripta-database_config:/data/configdb
+
+networks:
+  innoscripta-network:
+    driver: bridge
+
+volumes:
+  innoscripta-database:
+    driver: local
+  innoscripta-database_config:
+    driver: local
