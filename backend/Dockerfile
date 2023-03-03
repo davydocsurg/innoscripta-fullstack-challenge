@@ -14,8 +14,13 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY . /var/www
 
 # Install application dependencies with Composer
-RUN composer update
-RUN composer install --no-dev --no-scripts --no-progress --prefer-dist --optimize-autoloader
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    && composer update\
+    && composer install --no-dev --no-scripts --no-progress --prefer-dist --optimize-autoloader \
+    && apt-get purge -y git \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
 
 # Generate application key
 RUN php artisan key:generate

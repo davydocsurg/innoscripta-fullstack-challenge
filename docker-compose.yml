@@ -12,6 +12,21 @@ services:
     networks:
       - innoscripta-network
 
+  database:
+    image: mysql:5.7
+    container_name: innoscripta-database
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PORT: ${MYSQL_PORT:-3306}
+      # MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - database_data:/var/lib/mysql/data:rw
+
 networks:
   innoscripta-network:
     driver: bridge
+
+volumes:
+  database_data:
