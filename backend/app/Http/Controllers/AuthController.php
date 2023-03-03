@@ -110,7 +110,7 @@ class AuthController extends Controller
 
         $invalidCredentialsResponse = [
             'status' => false,
-            'message' => 'Invalid Credentials',
+            'message' => 'Invalid Credentials. Check and try again',
         ];
 
         $email = $request->email;
@@ -125,12 +125,12 @@ class AuthController extends Controller
             return response($invalidCredentialsResponse, 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token');
 
         $data = [
             'status' => true,
             'message' => 'Login was successfully',
-            'token' => $token,
+            'token' => $token->accessToken,
             'token_type' => 'Bearer',
             'token_expires' => Carbon::parse(
                 $token->token->expires_at
