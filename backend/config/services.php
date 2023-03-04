@@ -12,7 +12,7 @@ return [
     | location for this type of information, allowing packages to have
     | a conventional file to locate the various service credentials.
     |
-    */
+     */
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
@@ -29,6 +29,18 @@ return [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+    ],
+
+    'nytimes' => [
+        'base_url' => 'https://api.nytimes.com/svc/search/v2/articlesearch.json',
+        'key' => env('NYTIMES_API_KEY', 'xa5JougnXXJ33LbzAvath5EFakICBw0x'),
+        'app_id' => env('NYTIMES_APP_ID', 'f08d8cd3-ed19-41b6-9f3f-e91aeb0643e4'),
+        'app_secret' => env('NYTIMES_APP_SECRET', 'j8SiH5WwApNpT66b'),
+    ],
+
+    'guardian' => [
+        'base_url' => 'https://content.guardianapis.com/search',
+        'key' => env('GUARDIAN_API_KEY', '391ca6af-35ce-4edc-b24a-13ef92e01348'),
     ],
 
 ];
