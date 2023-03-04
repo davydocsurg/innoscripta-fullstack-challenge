@@ -8,8 +8,8 @@ abstract class BaseNYTimesAPI extends BaseAPI
 {
     public function __construct($key)
     {
-        $this->key = config('news.nytimes.api_key');
+        $this->key = config('services.nytimes.api_key');
         $this->requestParamKey = 'api-key';
-        $this->baseUrl = config('news.nytimes.base_url');
+        $this->baseUrl = config('services.nytimes.base_url');
     }
 }
