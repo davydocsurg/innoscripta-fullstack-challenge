@@ -2,6 +2,8 @@
 
 namespace App\Http\APIs;
 
+use Illuminate\Support\Facades\Http;
+
 /**
  * Base class for interacting with external APIs using Laravel's Http class.
  */
@@ -56,4 +58,29 @@ abstract class BaseAPI
         $this->baseUrl = $baseUrl;
     }
 
+    /**
+     * Builds the URL for an API request based on the base URL, API key, and any additional query parameters.
+     *
+     * @param array $queries The additional query parameters to include in the URL.
+     * @return self
+     */
+    public function buildRequestUrl(array $queries = []): self
+    {
+        $query = array_merge($queries, [$this->requestParamKey => $this->key]);
+        $this->url = $this->baseUrl . '?' . http_build_query($query);
+
+        return $this;
+    }
+
+    /**
+     * Performs an API request and stores the response data in the $data property.
+     *
+     * @return self
+     */
+    public function sendRequest(): self
+    {
+        $this->data = Http::get($this->url ?? $this->baseUrl)->json();
+
+        return $this;
+    }
 }
