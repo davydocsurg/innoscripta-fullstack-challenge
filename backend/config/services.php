@@ -38,4 +38,9 @@ return [
         'app_secret' => env('NYTIMES_APP_SECRET', 'j8SiH5WwApNpT66b'),
     ],
 
+    'guardian' => [
+        'base_url' => 'https://content.guardianapis.com/search',
+        'key' => env('GUARDIAN_API_KEY', '391ca6af-35ce-4edc-b24a-13ef92e01348'),
+    ],
+
 ];
