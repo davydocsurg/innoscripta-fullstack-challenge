@@ -42,7 +42,7 @@ abstract class BaseAPI
      *
      * @var mixed
      */
-    protected $data;
+    public $data;
 
     /**
      * Constructs a new BaseAPI instance with the given API key, parameter key, and base URL.

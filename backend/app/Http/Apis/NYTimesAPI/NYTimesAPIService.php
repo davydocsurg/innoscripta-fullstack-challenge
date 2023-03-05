@@ -9,12 +9,15 @@ class NYTimesAPIService extends BaseNYTimesAPI
         parent::__construct(config('services.nytimes.key'));
     }
 
-    public function searchArticles($query, $page, $filters = [])
+    public function getArticles()
+    {
+        return $this->data['response']['results'];
+    }
+
+    public function searchArticles($query, $filters = [])
     {
         $queries = [
             'q' => $query,
-            'sort' => 'newest',
-            'page' => $page,
             'fq' => $filters,
         ];
 
