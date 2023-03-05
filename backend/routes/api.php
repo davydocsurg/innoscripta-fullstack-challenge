@@ -18,3 +18,9 @@ Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'
 
 // login a user
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
+
+// articles
+Route::prefix('articles')->group(function () {
+    // search for articles
+    Route::get('/search', [App\Http\Controllers\ArticleController::class, 'search']);
+});

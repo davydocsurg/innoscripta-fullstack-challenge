@@ -2,8 +2,6 @@
 
 namespace App\Http\APIs\NYTimesAPI;
 
-use Illuminate\Support\Arr;
-
 class NYTimesAPIService extends BaseNYTimesAPI
 {
     public function __construct()
@@ -11,10 +9,16 @@ class NYTimesAPIService extends BaseNYTimesAPI
         parent::__construct(config('services.nytimes.api_key'));
     }
 
-    public function saveArticle($article)
+    public function searchArticles($query, $filters = [])
     {
-        $article = Arr::dot($article);
+        $queries = [
+            'q' => $query,
+            'sort' => 'newest',
+            'page' => 0,
+            'fq' => $filters,
+        ];
 
-        return;
+        return $this->buildRequestUrl($queries)->sendRequest();
     }
+
 }
