@@ -53,7 +53,7 @@ abstract class BaseAPI
      */
     public function __construct(string $key, string $requestParamKey, string $baseUrl)
     {
-        $this->key = 'xa5JougnXXJ33LbzAvath5EFakICBw0x';
+        $this->key = $key; //config('services.nytimes.key');
         $this->requestParamKey = $requestParamKey;
         $this->baseUrl = $baseUrl;
     }
@@ -68,7 +68,8 @@ abstract class BaseAPI
     {
         $query = array_merge($queries, [$this->requestParamKey => $this->key]);
         $this->url = $this->baseUrl . '?' . http_build_query($query);
-        dd($query);
+        // dd($query);
+
         return $this;
     }
 
