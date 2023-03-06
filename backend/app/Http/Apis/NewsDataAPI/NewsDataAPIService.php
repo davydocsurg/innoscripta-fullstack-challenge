@@ -9,13 +9,12 @@ class NewsDataAPIService extends BaseNewsDataAPI
         parent::__construct(config('services.newsdata.key'));
     }
 
-    public function searchArticles($query, $beginDate = null, $endDate = null, $filters = [])
+    public function searchArticles($query, $filters = [])
     {
         $queries = [
             'q' => $query,
             'language' => 'en',
-            'begin_date' => $beginDate ?? null,
-            'end_date' => $endDate ?? null,
+
         ];
 
         return $this->buildCustomRequestUrl($queries)->sendRequest();

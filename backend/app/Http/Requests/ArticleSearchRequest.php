@@ -21,8 +21,8 @@ class ArticleSearchRequest extends FormRequest
             'source' => 'required|string|in:nytimes,guardian',
             'per_page' => 'nullable|integer|min:1|max:100',
             'current_page' => 'nullable|integer|min:1|max:20',
-            'begin_date' => 'nullable|date_format:Y-m-d',
-            'end_date' => 'nullable|date_format:Y-m-d',
+            'begin_date' => 'nullable|date_format:Ymd',
+            'end_date' => 'nullable|date_format:Ymd',
         ];
     }
 

@@ -113,9 +113,9 @@ class ArticleController extends Controller
      */
     public function searchWithNYTimes(Request $request)
     {
-        list($query, $perPage, $currentPage) = $this->getRequestInputs($request);
+        list($query, $perPage, $currentPage, $beginDate, $endDate) = $this->getRequestInputs($request);
         $api = new NYTimesAPIService();
-        $response = $api->searchArticles($query);
+        $response = $api->searchArticles($query, $beginDate, $endDate);
 
         $articles = $response->data['response']['docs'];
         $paginateArticles = $this->paginateArticles($articles, $perPage, $currentPage);
