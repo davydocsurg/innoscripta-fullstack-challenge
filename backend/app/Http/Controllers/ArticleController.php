@@ -114,8 +114,7 @@ class ArticleController extends Controller
         $api = new GuardianAPIService();
         $response = $api->searchArticles($query);
 
-        $articles = $response->data['response']['docs'];
-        dd($articles);
+        $articles = $response->data['response']['results'];
         $paginateArticles = $this->paginateArticles($articles, $perPage, $currentPage);
         return $paginateArticles;
     }
