@@ -75,8 +75,7 @@ class ArticleController extends Controller
     public function paginateArticles($articles, $perPage, $page)
     {
         $offset = ($page * $perPage) - $perPage;
-        // return array_slice($articles, $offset, $perPage, true);
-        dd(array_slice($articles, $offset, $perPage, true));
+
         $paginator = new LengthAwarePaginator(
             array_slice($articles, $offset, $perPage, true),
             count($articles),
@@ -84,7 +83,6 @@ class ArticleController extends Controller
             $page,
             ['path' => request()->url(), 'query' => request()->query()]
         );
-        $result = $paginator->appends(request()->query())->links();
-        return $result;
+        return $paginator;
     }
 }
