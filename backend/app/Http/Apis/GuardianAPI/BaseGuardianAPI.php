@@ -8,7 +8,7 @@ abstract class BaseGuardianAPI extends BaseAPI
 {
     public function __construct($key)
     {
-        $this->key = config('services.guardian.api_key');
+        $this->key = config('services.guardian.key');
         $this->requestParamKey = 'api-key';
         $this->baseUrl = config('services.guardian.base_url');
     }

@@ -17,7 +17,7 @@ class ArticleSearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'query' => 'required|string|min:3|max:20',
+            'query' => 'required|string|min:2|max:20',
             'per_page' => 'nullable|integer|min:1|max:100',
             'current_page' => 'nullable|integer|min:1|max:20',
         ];

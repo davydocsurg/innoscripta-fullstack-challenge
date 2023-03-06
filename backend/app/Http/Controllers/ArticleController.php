@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\APIs\GuardianAPI\GuardianAPIService;
 use App\Http\APIs\NYTimesAPI\NYTimesAPIService;
 use App\Http\Requests\ArticleSearchRequest;
 use Illuminate\Http\Request;
@@ -40,7 +41,24 @@ class ArticleController extends Controller
                     return response()->json(['error' => $ex->getMessage()], 500);
                 }
                 break;
+            case 'guardian';
+                try {
+                    $paginateArticles = $this->searchWithGuardian($request);
+                    if ($paginateArticles->isEmpty()) {
+                        return response()->json([
+                            'status' => false,
+                            'message' => 'No articles found',
+                        ], 404);
+                    }
 
+                    return response()->json([
+                        'status' => true,
+                        'message' => $message,
+                        'articles' => $paginateArticles,
+                    ], 200);
+                } catch (\Exception$ex) {
+                    return response()->json(['error' => $ex->getMessage()], 500);
+                }
             default:
                 # code...
                 break;
@@ -75,9 +93,7 @@ class ArticleController extends Controller
      */
     public function searchWithNYTimes(Request $request)
     {
-        $query = $request->input('query');
-        $perPage = $request->input('per_page', 5);
-        $currentPage = $request->input('current_page', 2);
+        list($query, $perPage, $currentPage) = $this->getRequestInputs($request);
         $api = new NYTimesAPIService();
         $response = $api->searchArticles($query);
 
@@ -85,5 +101,36 @@ class ArticleController extends Controller
         $paginateArticles = $this->paginateArticles($articles, $perPage, $currentPage);
         return $paginateArticles;
 
+    }
+
+    /**
+     * Search Guardian articles
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function searchWithGuardian(Request $request)
+    {
+        list($query, $perPage, $currentPage) = $this->getRequestInputs($request);
+        $api = new GuardianAPIService();
+        $response = $api->searchArticles($query);
+
+        $articles = $response->data['response']['docs'];
+        dd($articles);
+        $paginateArticles = $this->paginateArticles($articles, $perPage, $currentPage);
+        return $paginateArticles;
+    }
+
+    /**
+     * Get Request inputs
+     * @param Request $request
+     * @return array
+     */
+    public function getRequestInputs(Request $request)
+    {
+        $inputs = $request->all();
+        $query = $inputs['query'];
+        $perPage = $inputs['per_page'] ?? 5;
+        $currentPage = $inputs['current_page'] ?? 1;
+        return [$query, $perPage, $currentPage];
     }
 }
