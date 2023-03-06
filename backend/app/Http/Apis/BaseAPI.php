@@ -68,7 +68,19 @@ abstract class BaseAPI
     {
         $query = array_merge($queries, [$this->requestParamKey => $this->key]);
         $this->url = $this->baseUrl . '?' . http_build_query($query);
-        // dd($query);
+
+        return $this;
+    }
+
+    /** Builds the URL for some API request that require a specific pattern.
+     *
+     * @param array $queries The additional query parameters to include in the URL.
+     * @return self
+     */
+    public function buildCustomRequestUrl(array $queries = []): self
+    {
+        $query = array_merge([$this->requestParamKey => $this->key], $queries);
+        $this->url = $this->baseUrl . '?' . http_build_query($query);
 
         return $this;
     }
