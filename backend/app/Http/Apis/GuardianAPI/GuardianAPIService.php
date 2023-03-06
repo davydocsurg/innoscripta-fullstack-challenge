@@ -2,19 +2,19 @@
 
 namespace App\Http\APIs\GuardianAPI;
 
-use Illuminate\Support\Arr;
-
 class GuardianAPIService extends BaseGuardianAPI
 {
     public function __construct()
     {
-        parent::__construct(config('services.guardian.api_key'));
+        parent::__construct(config('services.guardian.key'));
     }
 
-    public function saveArticle($article)
+    public function searchArticles($query, $filters = [])
     {
-        $article = Arr::dot($article);
+        $queries = [
+            'q' => $query,
+        ];
 
-        return;
+        return $this->buildRequestUrl($queries)->sendRequest();
     }
 }

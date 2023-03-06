@@ -42,7 +42,7 @@ abstract class BaseAPI
      *
      * @var mixed
      */
-    protected $data;
+    public $data;
 
     /**
      * Constructs a new BaseAPI instance with the given API key, parameter key, and base URL.
@@ -53,7 +53,7 @@ abstract class BaseAPI
      */
     public function __construct(string $key, string $requestParamKey, string $baseUrl)
     {
-        $this->key = $key;
+        $this->key = $key; //config('services.nytimes.key');
         $this->requestParamKey = $requestParamKey;
         $this->baseUrl = $baseUrl;
     }
@@ -67,6 +67,19 @@ abstract class BaseAPI
     public function buildRequestUrl(array $queries = []): self
     {
         $query = array_merge($queries, [$this->requestParamKey => $this->key]);
+        $this->url = $this->baseUrl . '?' . http_build_query($query);
+
+        return $this;
+    }
+
+    /** Builds the URL for some API request that require a specific pattern.
+     *
+     * @param array $queries The additional query parameters to include in the URL.
+     * @return self
+     */
+    public function buildCustomRequestUrl(array $queries = []): self
+    {
+        $query = array_merge([$this->requestParamKey => $this->key], $queries);
         $this->url = $this->baseUrl . '?' . http_build_query($query);
 
         return $this;
