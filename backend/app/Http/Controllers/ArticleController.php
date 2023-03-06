@@ -70,6 +70,12 @@ class ArticleController extends Controller
                             'message' => 'No articles found',
                         ], 404);
                     }
+
+                    return response()->json([
+                        'status' => true,
+                        'message' => $message,
+                        'articles' => $paginateArticles,
+                    ], 200);
                 } catch (\Exception$ex) {
                     return response()->json(['error' => $ex->getMessage()], 500);
                 }
@@ -144,8 +150,7 @@ class ArticleController extends Controller
         $api = new NewsDataAPIService();
         $response = $api->searchArticles($query);
 
-        dd($response);
-        $articles = $response;
+        $articles = $response->data['results'];
         $paginateArticles = $this->paginateArticles($articles, $perPage, $currentPage);
         return $paginateArticles;
     }
