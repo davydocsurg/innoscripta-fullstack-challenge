@@ -130,9 +130,9 @@ class ArticleController extends Controller
      */
     public function searchWithGuardian(Request $request)
     {
-        list($query, $perPage, $currentPage) = $this->getRequestInputs($request);
+        list($query, $perPage, $currentPage, $beginDate, $endDate, $fromDate, $tag) = $this->getRequestInputs($request);
         $api = new GuardianAPIService();
-        $response = $api->searchArticles($query);
+        $response = $api->searchArticles($query, $fromDate, $tag);
 
         $articles = $response->data['response']['results'];
         $paginateArticles = $this->paginateArticles($articles, $perPage, $currentPage);
@@ -168,6 +168,9 @@ class ArticleController extends Controller
         $currentPage = $inputs['current_page'] ?? 1;
         $beginDate = $inputs['begin_date'] ?? null;
         $endDate = $inputs['end_date'] ?? null;
-        return [$query, $perPage, $currentPage, $beginDate, $endDate];
+        $fromDate = $inputs['from_date'] ?? null;
+        $tag = $inputs['tag'] ?? null;
+
+        return [$query, $perPage, $currentPage, $beginDate, $endDate, $fromDate, $tag];
     }
 }

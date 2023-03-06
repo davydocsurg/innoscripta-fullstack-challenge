@@ -23,6 +23,8 @@ class ArticleSearchRequest extends FormRequest
             'current_page' => 'nullable|integer|min:1|max:20',
             'begin_date' => 'nullable|date_format:Ymd',
             'end_date' => 'nullable|date_format:Ymd',
+            'from_date' => 'nullable|date_format:Y-m-d',
+            'tag' => 'nullable|string',
         ];
     }
 
@@ -40,8 +42,10 @@ class ArticleSearchRequest extends FormRequest
             'current_page.integer' => 'The current page number must be an integer',
             'current_page.min' => 'The current page number must be at least 1',
             'current_page.max' => 'The current page number must not exceed 20',
-            'begin_date.date_format' => 'The begin date must be in the format Y-m-d',
-            'end_date.date_format' => 'The end date must be in the format Y-m-d',
+            'begin_date.date_format' => 'The begin date must be in the format Y m d',
+            'end_date.date_format' => 'The end date must be in the format Y m d',
+            'from_date.date_format' => 'The from date must be in the format Y-m-d',
+            'tag.string' => 'The tag must be a string',
         ];
     }
 
