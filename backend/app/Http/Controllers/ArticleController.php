@@ -166,6 +166,8 @@ class ArticleController extends Controller
         $query = $inputs['query'];
         $perPage = $inputs['per_page'] ?? 5;
         $currentPage = $inputs['current_page'] ?? 1;
-        return [$query, $perPage, $currentPage];
+        $beginDate = $inputs['begin_date'] ?? null;
+        $endDate = $inputs['end_date'] ?? null;
+        return [$query, $perPage, $currentPage, $beginDate, $endDate];
     }
 }

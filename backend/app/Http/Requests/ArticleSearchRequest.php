@@ -18,14 +18,19 @@ class ArticleSearchRequest extends FormRequest
     {
         return [
             'query' => 'required|string|min:2|max:20',
+            'source' => 'required|string|in:nytimes,guardian',
             'per_page' => 'nullable|integer|min:1|max:100',
             'current_page' => 'nullable|integer|min:1|max:20',
+            'begin_date' => 'nullable|date_format:Y-m-d',
+            'end_date' => 'nullable|date_format:Y-m-d',
         ];
     }
 
     public function messages()
     {
         return [
+            'source.required' => 'Kindly select a source',
+            'source.in' => 'The selected source is invalid',
             'query.required' => 'Kindly enter your search term',
             'query.min' => 'Your search term is too short',
             'query.max' => 'Your search term is too long',
@@ -35,6 +40,8 @@ class ArticleSearchRequest extends FormRequest
             'current_page.integer' => 'The current page number must be an integer',
             'current_page.min' => 'The current page number must be at least 1',
             'current_page.max' => 'The current page number must not exceed 20',
+            'begin_date.date_format' => 'The begin date must be in the format Y-m-d',
+            'end_date.date_format' => 'The end date must be in the format Y-m-d',
         ];
     }
 
