@@ -36,16 +36,22 @@ class UserSettingController extends Controller
     {
         $userId = auth()->user()->id;
 
-        $settings = [
-            'favorite_sources' => $request->favorite_sources ?? [],
-            'favorite_categories' => $request->favorite_categories ?? [],
-            'favorite_authors' => $request->favorite_authors ?? [],
-        ];
-
+        // update user settings but don't override the other settings
         $userSetting = UserSetting::where('user_id', $userId)->first();
-        $userSetting->update([
-            'settings' => $settings,
-        ]);
+        $settings = [
+            'favorite_sources' => $request->favorite_sources ?? $userSetting->settings['favorite_sources'],
+            'favorite_categories' => $request->favorite_categories ?? $userSetting->settings['favorite_categories'],
+            'favorite_authors' => $request->favorite_authors ?? $userSetting->settings['favorite_authors'],
+        ];
+        if (!$userSetting) {
+            return response([
+                'status' => false,
+                'message' => 'User settings not found',
+            ], 404);
+        }
+
+        $userSetting->settings = array_merge($userSetting->settings, $settings);
+        $userSetting->save();
 
         return response([
             'status' => true,
