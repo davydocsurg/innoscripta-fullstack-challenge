@@ -44,14 +44,14 @@ class AuthController extends Controller
             $user = new User();
             $this->store($request, $user);
 
-            $userSetting = new UserSetting();
-            $this->createDefaultUserSetting($user, $userSetting);
+            $this->createDefaultUserSetting($user);
 
             DB::commit();
 
             return response([
                 'status' => true,
                 'message' => 'Registeration was successfully',
+                'user' => $user,
             ], 201);
         } catch (\Throwable$th) {
             DB::rollBack();
@@ -108,15 +108,15 @@ class AuthController extends Controller
 
     /**
      * Create default user settings
-     * @param $userSetting $user
+     * @param $user
      */
-    public function createDefaultUserSetting($userSetting, $user)
+    public function createDefaultUserSetting($user)
     {
-        $userSetting->user_id = $user->id;
-        // generate a unique key for the user
-        $userSetting->key = Str::slug($user->first_name . ' ' . $user->last_name . ' ' . Carbon::now()->timestamp, '-') . '-' . Str::random(10);
-        $userSetting->settings = UserSetting::defaultSettings();
-        $userSetting->save();
+        UserSetting::create([
+            'user_id' => $user->id,
+            'key' => Str::slug($user->first_name . ' ' . $user->last_name . ' ' . Carbon::now() . ' ' . Str::random(10)),
+            'settings' => UserSetting::defaultSettings(),
+        ]);
     }
 
     /**
