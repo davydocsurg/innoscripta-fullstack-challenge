@@ -5,7 +5,7 @@ FROM php:8.0-fpm
 WORKDIR /var/www/html
 
 # Install required PHP extensions
-RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql
 
 # Copy the current directory contents into the container at /var/www/html
 COPY . .

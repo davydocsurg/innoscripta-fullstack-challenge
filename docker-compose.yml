@@ -20,31 +20,31 @@ services:
   database:
     platform: linux/amd64 # for M1 Macs
     image: mysql:8.0
-    # container_name: innoscripta-database
+    container_name: innoscripta-database
     environment:
       MYSQL_DATABASE: ${DB_DATABASE:-innoscripta}
-      MYSQL_USER: ${DB_USERNAME:-root}
+      # MYSQL_USER: ${DB_USERNAME:-root}
       # MYSQL_PASSWORD: ${DB_PASSWORD:-root}
       # MYSQL_PORT: ${MYSQL_PORT:-8889}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
     ports:
-      - 8889:3306
+      - 3306:3306
     networks:
       - innoscripta-network
     volumes:
-      - db_data:/var/lib/mysql
+      - ./mysql/data:/var/lib/mysql
 
-  frontend:
-    build: ./frontend
-    image: innoscripta-frontend
-    container_name: innoscripta-frontend
-    restart: always
-    ports:
-      - 3000:3000
-    networks:
-      - innoscripta-network
-    depends_on:
-      - backend
+  # frontend:
+  #   build: ./frontend
+  #   image: innoscripta-frontend
+  #   container_name: innoscripta-frontend
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - innoscripta-network
+  #   depends_on:
+  #     - backend
 
 networks:
   innoscripta-network:
