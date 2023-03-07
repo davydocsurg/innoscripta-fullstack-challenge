@@ -18,11 +18,12 @@ class UserSettingController extends Controller
         $userId = auth()->user()->id;
 
         $userSetting = UserSetting::where('user_id', $userId)->first();
+        $formatUserSettings = UserSetting::getFormattedSettings($userSetting->settings);
 
         return response([
             'status' => true,
             'message' => 'User settings fetched successfully',
-            'user_settings' => $userSetting,
+            'user_settings' => $formatUserSettings,
         ], 200);
     }
 

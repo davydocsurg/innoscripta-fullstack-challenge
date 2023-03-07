@@ -65,8 +65,8 @@ class UserSetting extends Model
     /**
      * Fetch default settings as an object
      */
-    public static function formattedSettings($user)
+    public static function getFormattedSettings($userSettings)
     {
-        return json_decode($user->attributes['settings']);
+        return json_decode($userSettings);
     }
 }
