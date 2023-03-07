@@ -9,10 +9,10 @@ class NewsDataAPIService extends BaseNewsDataAPI
         parent::__construct(config('services.newsdata.key'));
     }
 
-    public function searchArticles($query, $filters = [])
+    public function searchArticles($keyword, $filters = [])
     {
         $queries = [
-            'q' => $query,
+            'q' => $keyword,
             'language' => 'en',
 
         ];

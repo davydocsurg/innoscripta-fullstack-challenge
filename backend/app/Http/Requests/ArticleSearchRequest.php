@@ -17,7 +17,7 @@ class ArticleSearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'query' => 'required|string|min:2|max:20',
+            'keyword' => 'required|string|min:2|max:20',
             'source' => 'required|string|in:nytimes,guardian',
             'per_page' => 'nullable|integer|min:1|max:100',
             'current_page' => 'nullable|integer|min:1|max:20',
@@ -33,9 +33,9 @@ class ArticleSearchRequest extends FormRequest
         return [
             'source.required' => 'Kindly select a source',
             'source.in' => 'The selected source is invalid',
-            'query.required' => 'Kindly enter your search term',
-            'query.min' => 'Your search term is too short',
-            'query.max' => 'Your search term is too long',
+            'keyword.required' => 'Kindly enter your search term',
+            'keyword.min' => 'Your search term is too short',
+            'keyword.max' => 'Your search term is too long',
             'per_page.integer' => 'The number of articles per page must be an integer',
             'per_page.min' => 'The number of articles per page must be at least 1',
             'per_page.max' => 'The number of articles per page must not exceed 100',
