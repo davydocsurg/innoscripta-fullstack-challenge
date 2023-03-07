@@ -68,7 +68,7 @@ abstract class BaseAPI
     {
         $query = array_merge($queries, [$this->requestParamKey => $this->key]);
         $this->url = $this->baseUrl . '?' . http_build_query($query);
-        dd($this->url);
+
         return $this;
     }
 

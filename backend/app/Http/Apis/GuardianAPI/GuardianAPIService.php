@@ -14,7 +14,7 @@ class GuardianAPIService extends BaseGuardianAPI
         $queries = [
             'q' => $query,
             'from-date' => $fromDate ?? null,
-            'tag' => $tag ?? null,
+            // 'tag' => $tag ?? null,
         ];
 
         return $this->buildRequestUrl($queries)->sendRequest();
