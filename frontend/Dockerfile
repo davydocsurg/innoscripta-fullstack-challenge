@@ -8,4 +8,4 @@ RUN npm run build
 
 FROM nginx:alpine as server
 COPY --from=builder /app/dist /usr/share/nginx/html
-EXPOSE 30
+EXPOSE 3000

@@ -35,6 +35,18 @@ services:
       - innoscripta-database:/data/db
       - innoscripta-database_config:/data/configdb
 
+  frontend:
+    build: ./frontend
+    image: innoscripta-frontend
+    container_name: innoscripta-frontend
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - innoscripta-network
+    depends_on:
+      - backend
+
 networks:
   innoscripta-network:
     driver: bridge
