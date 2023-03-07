@@ -113,9 +113,9 @@ class ArticleController extends Controller
      */
     public function searchWithNYTimes(Request $request)
     {
-        list($query, $perPage, $currentPage) = $this->getRequestInputs($request);
+        list($query, $perPage, $currentPage, $beginDate, $endDate) = $this->getRequestInputs($request);
         $api = new NYTimesAPIService();
-        $response = $api->searchArticles($query);
+        $response = $api->searchArticles($query, $beginDate, $endDate);
 
         $articles = $response->data['response']['docs'];
         $paginateArticles = $this->paginateArticles($articles, $perPage, $currentPage);
@@ -130,9 +130,9 @@ class ArticleController extends Controller
      */
     public function searchWithGuardian(Request $request)
     {
-        list($query, $perPage, $currentPage) = $this->getRequestInputs($request);
+        list($query, $perPage, $currentPage, $beginDate, $endDate, $fromDate, $tag) = $this->getRequestInputs($request);
         $api = new GuardianAPIService();
-        $response = $api->searchArticles($query);
+        $response = $api->searchArticles($query, $fromDate, $tag);
 
         $articles = $response->data['response']['results'];
         $paginateArticles = $this->paginateArticles($articles, $perPage, $currentPage);
@@ -166,6 +166,11 @@ class ArticleController extends Controller
         $query = $inputs['query'];
         $perPage = $inputs['per_page'] ?? 5;
         $currentPage = $inputs['current_page'] ?? 1;
-        return [$query, $perPage, $currentPage];
+        $beginDate = $inputs['begin_date'] ?? null;
+        $endDate = $inputs['end_date'] ?? null;
+        $fromDate = $inputs['from_date'] ?? null;
+        $tag = $inputs['tag'] ?? null;
+
+        return [$query, $perPage, $currentPage, $beginDate, $endDate, $fromDate, $tag];
     }
 }

@@ -14,6 +14,7 @@ class NewsDataAPIService extends BaseNewsDataAPI
         $queries = [
             'q' => $query,
             'language' => 'en',
+
         ];
 
         return $this->buildCustomRequestUrl($queries)->sendRequest();
