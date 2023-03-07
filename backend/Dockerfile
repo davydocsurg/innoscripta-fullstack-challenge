@@ -4,6 +4,9 @@ FROM php:8.0-fpm
 # Set the working directory to /var/www/html
 WORKDIR /var/www/html
 
+# Install required PHP extensions
+RUN docker-php-ext-install pdo_mysql
+
 # Copy the current directory contents into the container at /var/www/html
 COPY . .
 
@@ -28,6 +31,7 @@ ENV DB_PASSWORD=${DB_PASSWORD}
 
 ## Run project ./exec.sh /tmp
 COPY ./exec.sh /tmp
+RUN chmod +x /tmp/exec.sh
 ENTRYPOINT ["/tmp/exec.sh"]
 EXPOSE 8000
 
