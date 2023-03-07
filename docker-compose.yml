@@ -23,10 +23,10 @@ services:
     container_name: innoscripta-database
     environment:
       MYSQL_DATABASE: ${DB_DATABASE:-innoscripta}
-      MYSQL_USER: ${DB_USERNAME:-root}
+      MYSQL_USER: ${DB_USERNAME:-username}
       # MYSQL_PASSWORD: ${DB_PASSWORD:-root}
       MYSQL_PORT: ${MYSQL_PORT:-8889}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
     # ports:
     #   - 8889:3306
     networks:
