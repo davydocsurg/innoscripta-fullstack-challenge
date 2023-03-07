@@ -2,9 +2,15 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { InputAdornment, TextField as MUITextField } from "@mui/material";
 
 import { useField } from "@unform/core";
+import { FiAlertCircle } from "react-icons/fi";
+
 // local imports
 import type CustomInputProps from "./CustomInputProps";
 import { Prefix } from "./styles";
+import { Error } from "@/styles/styled-components";
+import { errorColor } from "@/styles/variables";
+import { putMask } from "./hooks/putMask";
+import { Mask } from "@/utils";
 
 /**
  * Input component
@@ -51,32 +57,14 @@ const Input: React.FC<CustomInputProps> = ({
      * Handle key down event
      * Put mask on input if its designed to
      */
-    //   const handleMaskEvents = useCallback((e: any) => {
-    //     if (mask){
-    //       putMask(e, mask)
-    //     }
-    //   }, [mask]);
-
-    //   const handleFocus = useCallback((e: any) => {
-    //     setIsFocused(true);
-    //   }, []);
-
-    //   const handleBlur = useCallback((e: any) => {
-    //     setIsFocused(false);
-    //     setIsFilled(!!inputRef.current?.value);
-    //   }, []);
-
-    //   const handleLength = useCallback(() => {
-    //     if (!mask) {
-    //       return;
-    //     }
-
-    //     if (!Mask.MASK_ONLY_NUMBERS.includes(mask)) {
-    //       return;
-    //     };
-
-    //     return Mask.getOnlyNumbers(mask).length;
-    //   }, []);
+    const handleMaskEvents = useCallback(
+        (e: any) => {
+            if (mask) {
+                putMask(e, mask);
+            }
+        },
+        [mask]
+    );
 
     const handleFocus = useCallback((e: any) => {
         setIsFocused(true);
@@ -85,6 +73,18 @@ const Input: React.FC<CustomInputProps> = ({
     const handleBlur = useCallback((e: any) => {
         setIsFocused(false);
         setIsFilled(!!inputRef.current?.value);
+    }, []);
+
+    const handleLength = useCallback(() => {
+        if (!mask) {
+            return;
+        }
+
+        if (!Mask.MASK_ONLY_NUMBERS.includes(mask)) {
+            return;
+        }
+
+        return Mask.getOnlyNumbers(mask).length;
     }, []);
 
     const renderStartAdornment = useCallback(
@@ -112,7 +112,46 @@ const Input: React.FC<CustomInputProps> = ({
 
     return (
         <>
-            <MUITextField id={fieldName} />
+            <MUITextField
+                id={fieldName}
+                defaultValue={defaultValue}
+                inputRef={inputRef}
+                fullWidth
+                name={name}
+                label={label}
+                placeholder={placeholder}
+                onKeyDown={handleMaskEvents}
+                onKeyUp={handleMaskEvents}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                variant={variant}
+                error={!!error}
+                sx={{
+                    mb: Number(mb),
+                    mt: Number(mt),
+                    ml: Number(ml),
+                    mr: Number(mr),
+                }}
+                InputLabelProps={{
+                    shrink: isFilled || isFocused,
+                    style: {
+                        zIndex: 0,
+                    },
+                }}
+                inputProps={{
+                    maxLength: maxLength ?? handleLength(),
+                }}
+                InputProps={{
+                    readOnly,
+                    startAdornment: renderStartAdornment(Icon),
+                    endAdornment: error && (
+                        <Error title={error}>
+                            <FiAlertCircle size={20} color={errorColor} />
+                        </Error>
+                    ),
+                }}
+                {...rest}
+            />
         </>
     );
 };
