@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserSetting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -15,10 +18,10 @@ class AuthController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api', ['except' => ['login']]);
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
 
     /**
      * Register a new user.
@@ -28,21 +31,35 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $validate = $this->validator($request);
-        if ($validate->fails()) {
+        try {
+            DB::beginTransaction();
+            $validate = $this->validator($request);
+            if ($validate->fails()) {
+                return response([
+                    'status' => false,
+                    'errors' => $validate->errors()->messages(),
+                ], 400);
+            }
+
+            $user = new User();
+            $this->store($request, $user);
+
+            $userSetting = new UserSetting();
+            $this->createDefaultUserSetting($user, $userSetting);
+
+            DB::commit();
+
+            return response([
+                'status' => true,
+                'message' => 'Registeration was successfully',
+            ], 201);
+        } catch (\Throwable$th) {
+            DB::rollBack();
             return response([
                 'status' => false,
-                'errors' => $validate->errors()->messages(),
-            ], 400);
+                'message' => $th->getMessage(),
+            ], 500);
         }
-
-        $user = new User();
-        $this->store($request, $user);
-
-        return response([
-            'status' => true,
-            'message' => 'Registeration was successfully',
-        ], 201);
     }
 
     /**
@@ -87,6 +104,19 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
 
         $user->save();
+    }
+
+    /**
+     * Create default user settings
+     * @param $userSetting $user
+     */
+    public function createDefaultUserSetting($userSetting, $user)
+    {
+        $userSetting->user_id = $user->id;
+        // generate a unique key for the user
+        $userSetting->key = Str::slug($user->first_name . ' ' . $user->last_name . ' ' . Carbon::now()->timestamp, '-') . '-' . Str::random(10);
+        $userSetting->settings = UserSetting::defaultSettings();
+        $userSetting->save();
     }
 
     /**
