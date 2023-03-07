@@ -9,10 +9,10 @@ class GuardianAPIService extends BaseGuardianAPI
         parent::__construct(config('services.guardian.key'));
     }
 
-    public function searchArticles($query, $fromDate = null, $tag = null, $filters = [])
+    public function searchArticles($keyword, $fromDate = null, $tag = null, $filters = [])
     {
         $queries = [
-            'q' => $query,
+            'q' => $keyword,
             'from-date' => $fromDate ?? null,
             // 'tag' => $tag ?? null,
         ];

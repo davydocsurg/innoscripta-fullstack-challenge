@@ -9,10 +9,10 @@ class NYTimesAPIService extends BaseNYTimesAPI
         parent::__construct(config('services.nytimes.key'));
     }
 
-    public function searchArticles($query, $beginDate = null, $endDate = null, $filters = [])
+    public function searchArticles($keyword, $beginDate = null, $endDate = null, $filters = [])
     {
         $queries = [
-            'q' => $query,
+            'q' => $keyword,
             'fq' => $filters,
             'begin_date' => $beginDate ?? null,
             'end_date' => $endDate ?? null,
