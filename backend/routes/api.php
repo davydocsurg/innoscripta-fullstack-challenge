@@ -20,7 +20,11 @@ Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 
 // articles
-Route::prefix('articles')->group(function () {
+Route::prefix('articles')->middleware('auth:api')->group(function () {
     // search for articles
     Route::get('/search', [App\Http\Controllers\ArticleController::class, 'search']);
+    // update settings and preferences
+    Route::patch('/settings', [App\Http\Controllers\UserSettingController::class, 'updateUserSettings']);
+    // get settings and preferences
+    Route::get('/settings', [App\Http\Controllers\UserSettingController::class, 'getUserSettings']);
 });
