@@ -2,10 +2,10 @@ import React from "react";
 
 import { Grid } from "@mui/material";
 
-import Input from "components/Form/Input";
-import Select from "components/Form/Select";
+import Input from "../../../components/Form/Input";
+import Select from "../../../components/Form/Select";
 
-import IInputProps from "../Input/IInputProps";
+import CustomInputProps from "../Input/CustomInputProps";
 import ISelectProps from "../Select/ISelectProps";
 
 import { lgSize, mdSize, smSize, xlSize, xsSize } from "./hooks/gridSize";
@@ -30,7 +30,7 @@ const FormBuilder: React.FC<IProps> = ({
             return <Select {...(field as ISelectProps)} />;
         }
 
-        return <Input {...(field as IInputProps)} />;
+        return <Input {...(field as CustomInputProps)} />;
     }
 
     return (

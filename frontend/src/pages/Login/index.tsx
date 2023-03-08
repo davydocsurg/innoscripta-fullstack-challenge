@@ -10,19 +10,19 @@ import {
 
 // locals
 import logo from "../../assets/logo.svg";
-import { CardContainer, ContainerI } from "./styles";
 import { useForm } from "../../commons/hooks/form/useForm";
 import schema from "./validation/schema";
 import Input from "../../components/Form/Input";
 import { FiLock, FiMail } from "react-icons/fi";
+import { CardContainer, CustomContainer } from "../shared/styles";
 
 type LoginProps = {};
 
 const Login = (): React.ReactElement => {
     const form = useForm({ schema });
     return (
-        <ContainerI>
-            <img src={logo} alt="" />
+        <CustomContainer>
+            <img src={logo} alt="Innoscripta" />
             <CardContainer>
                 <Card sx={{ minWidth: 275 }}>
                     <CardContent
@@ -79,7 +79,7 @@ const Login = (): React.ReactElement => {
                     </CardContent>
                 </Card>
             </CardContainer>
-        </ContainerI>
+        </CustomContainer>
     );
 };
 

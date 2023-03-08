@@ -12,7 +12,7 @@ to {
 }
 `;
 
-export const ContainerI = styled.div`
+export const CustomContainer = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
