@@ -9,7 +9,10 @@ import { useForm } from "../../commons/hooks/form/useForm";
 import schema from "./validation/schema";
 import Input from "../../components/Form/Input";
 import { Form } from "@unform/web";
-import CustomFormButton from "../../components/Form/Buttons";
+import {
+    CustomFormButton,
+    CustomFormBtnLink,
+} from "../../components/Form/Buttons";
 
 const Register = (): React.ReactElement => {
     const form = useForm({ schema });
@@ -57,7 +60,7 @@ const Register = (): React.ReactElement => {
                         }}
                     >
                         {/* <FormBuilder fields={registrationFormFields} /> */}
-                        <Typography variant="h6" style={{ marginBottom: 4 }}>
+                        <Typography variant="h4" style={{ marginBottom: 4 }}>
                             Create an account
                         </Typography>
                         <Form ref={form.ref} onSubmit={() => {}}>
@@ -109,10 +112,15 @@ const Register = (): React.ReactElement => {
                                 variant="contained"
                                 loading={false}
                             />
-                            <Typography variant="h6" sx={{ marginBottom: 4 }}>
+                            <Typography variant="h6" sx={{ mt: 2 }}>
                                 Or
                             </Typography>
-                            <CustomFormButton title="Login" />
+                            <CustomFormBtnLink
+                                title="Login"
+                                color="primary"
+                                fullWidth={true}
+                                to="/login"
+                            />
                         </Form>
                     </CardContent>
                 </Card>

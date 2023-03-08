@@ -29,8 +29,8 @@ type CBProps = {
 };
 
 const CButton = styled(LoadingButton)<ButtonProps>(({ theme }) => ({
-    color: theme.palette.getContrastText(grey[700]),
-    backgroundColor: grey[700],
+    color: theme.palette.getContrastText(grey[800]),
+    backgroundColor: grey[800],
     "&:hover": {
         backgroundColor: grey[900],
     },
@@ -51,7 +51,6 @@ const CustomFormButton: React.FC<CBProps> = ({
     sx,
     className,
     ref,
-    // component,
 }) => {
     return (
         <CButton
