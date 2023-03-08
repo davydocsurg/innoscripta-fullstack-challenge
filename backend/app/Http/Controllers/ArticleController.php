@@ -61,7 +61,7 @@ class ArticleController extends Controller
                     return response()->json(['error' => $ex->getMessage()], 500);
                 }
                 break;
-            case 'newsdata';
+            case 'newsapi';
                 try {
                     $paginateArticles = $this->searchWithNewsAPI($request);
                     if ($paginateArticles->isEmpty()) {

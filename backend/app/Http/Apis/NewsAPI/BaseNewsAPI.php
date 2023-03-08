@@ -9,7 +9,7 @@ abstract class BaseNewsAPI extends BaseAPI
     public function __construct()
     {
         $this->key = config('services.newsapi.key');
-        $this->requestParamKey = 'apikey';
+        $this->requestParamKey = 'apiKey';
         $this->baseUrl = config('services.newsapi.base_url');
     }
 }

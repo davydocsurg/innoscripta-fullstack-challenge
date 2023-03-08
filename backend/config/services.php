@@ -45,7 +45,7 @@ return [
 
     'newsapi' => [
         'base_url' => 'https://newsdata.io/api/1/news',
-        'key' => env('NEWSDATA_API_KEY', 'pub_183493c19552e7486e8c5d92b8533b5886e26'),
+        'key' => env('NEWSDATA_API_KEY', 'e97acc1c-568b-479d-9e80-64d5617f4345'),
     ],
 
 ];
