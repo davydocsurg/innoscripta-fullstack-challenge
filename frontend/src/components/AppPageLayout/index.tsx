@@ -6,8 +6,8 @@ interface IProps {
     children: JSX.Element;
 }
 
-const AppPage: React.FC<IProps> = ({ children }) => (
+const AppPageLayout: React.FC<IProps> = ({ children }) => (
     <DashboardComp>{children}</DashboardComp>
 );
 
-export default AppPage;
+export default AppPageLayout;
