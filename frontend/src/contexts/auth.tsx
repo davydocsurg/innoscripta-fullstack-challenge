@@ -27,6 +27,8 @@ type LoginCredentials = {
 
 type AuthContextData = {
     user: User;
+    loading: boolean;
+    setLoading: (loading: boolean) => void;
     login(credentials: LoginCredentials): Promise<void>;
     logout(): void;
     updateUser(user: User): void;
@@ -40,6 +42,7 @@ type LoginRequest = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState<AuthState>(() => {
         const token = localStorage.getItem(authToken);
         const user = localStorage.getItem(authUser);
@@ -70,7 +73,14 @@ export const AuthProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ user: data.user, login, logout, updateUser }}
+            value={{
+                user: data.user,
+                loading,
+                setLoading,
+                login,
+                logout,
+                updateUser,
+            }}
         >
             {children}
         </AuthContext.Provider>

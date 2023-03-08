@@ -15,7 +15,8 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { backgroundColor } from "../../styles";
 import { Toast } from "../../utils/toast";
-import { api, endPoints, errorHandler } from "../../services";
+import { api, endPoints, errorHandler, messages, navUrl } from "../../services";
+import { useAuth } from "../../contexts";
 
 type RegistrationFormData = {
     first_name: string;
@@ -28,7 +29,7 @@ type RegistrationFormData = {
 const Register = (): React.ReactElement => {
     const form = useForm({ schema });
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+    const { loading, login, setLoading } = useAuth();
 
     const handleSubmit = useCallback(
         async (data: RegistrationFormData) => {
@@ -40,11 +41,17 @@ const Register = (): React.ReactElement => {
 
             try {
                 await api.post(endPoints.register, data);
+                toast.success(messages.registerSuccess);
+                // login user
+                await login({
+                    email: data.email,
+                    password: data.password,
+                });
+
+                navigate(navUrl.dashboard);
                 setLoading(false);
-                toast.success("Registration successful");
             } catch (error: any) {
                 const { message } = errorHandler(error);
-                // console.error(message, "\n", error);
                 toast.error(message);
 
                 setLoading(false);
@@ -122,7 +129,7 @@ const Register = (): React.ReactElement => {
                                 title="Login"
                                 color="primary"
                                 fullWidth={true}
-                                to="/"
+                                to={navUrl.login}
                                 component={Link}
                             />
                         </FormRig>

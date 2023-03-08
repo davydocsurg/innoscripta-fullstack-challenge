@@ -20,7 +20,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { backgroundColor } from "../../styles";
 import { Toast } from "../../utils/toast";
 import { useAuth } from "../../contexts";
-import { navUrl } from "../../services";
+import { messages, navUrl } from "../../services";
 
 type LoginFormData = {
     email: string;
@@ -29,11 +29,12 @@ type LoginFormData = {
 
 const Login = (): React.ReactElement => {
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { loading, login, setLoading } = useAuth();
     const form = useForm({ schema });
 
     const handleSubmit = useCallback(
         async (data: LoginFormData) => {
+            setLoading(true);
             await form.validation(data);
             const toast = new Toast().loading();
 
@@ -41,13 +42,11 @@ const Login = (): React.ReactElement => {
                 await login({ ...data });
                 toast.dismiss();
 
+                setLoading(false);
                 navigate(navUrl.dashboard);
             } catch (error: any) {
-                console.error(error);
-
-                toast.error(
-                    "Invalid credentials. Check your email and password and try again."
-                );
+                setLoading(false);
+                toast.error(messages.loginError);
             }
         },
         [login, form, navigate]
@@ -94,6 +93,7 @@ const Login = (): React.ReactElement => {
                                 variant="contained"
                                 type="submit"
                                 color="primary"
+                                disabled={loading}
                             >
                                 Login
                             </Button>
@@ -105,7 +105,7 @@ const Login = (): React.ReactElement => {
                                 title="Register"
                                 color="primary"
                                 fullWidth={true}
-                                to="/register"
+                                to={navUrl.register}
                                 component={Link}
                             />
                         </Form>
