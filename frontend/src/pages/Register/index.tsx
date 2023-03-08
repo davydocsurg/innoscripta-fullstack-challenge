@@ -8,7 +8,7 @@ import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useForm } from "../../commons/hooks/form/useForm";
 import schema from "./validation/schema";
 import Input from "../../components/Form/Input";
-import { Form } from "@unform/web";
+import { Form as FormRig } from "@unform/web";
 import {
     CustomFormButton,
     CustomFormBtnLink,
@@ -22,10 +22,17 @@ const Register = (): React.ReactElement => {
     const registrationFormFields = [
         {
             type: "text",
-            name: "name",
+            name: "first_name",
             icon: MdOutlineDescription,
-            label: "Name",
-            placeholder: "Berta",
+            label: "First Name",
+            placeholder: "David",
+        },
+        {
+            type: "text",
+            name: "last_name",
+            icon: MdOutlineDescription,
+            label: "Last Name",
+            placeholder: "Ndubuisi",
         },
         {
             type: "email",
@@ -45,7 +52,7 @@ const Register = (): React.ReactElement => {
             type: "password",
             name: "password_confirmation",
             icon: FiLock,
-            label: "Confirm your password",
+            label: "Confirm Password",
             placeholder: "********",
         },
     ];
@@ -61,70 +68,30 @@ const Register = (): React.ReactElement => {
                             margin: "0 auto",
                         }}
                     >
-                        {/* <FormBuilder fields={registrationFormFields} /> */}
                         <Typography variant="h4" style={{ marginBottom: 4 }}>
                             Create an account
                         </Typography>
-                        <Form ref={form.ref} onSubmit={() => {}}>
-                            <Input
-                                type="text"
-                                name="First Name"
-                                icon={MdOutlineDescription}
-                                label="First Name"
-                                placeholder="David"
-                                mb={1}
-                            />
+                        <FormRig ref={form.ref} onSubmit={() => {}}>
+                            <FormBuilder fields={registrationFormFields} />
+                        </FormRig>
 
-                            <Input
-                                type="text"
-                                name="Last Name"
-                                icon={MdOutlineDescription}
-                                label="Last Name"
-                                placeholder="Ndubuisi"
-                                mb={1}
-                            />
-
-                            <Input
-                                type="text"
-                                name="email"
-                                icon={FiMail}
-                                label="Email"
-                                placeholder="you@example.com"
-                                mb={1}
-                            />
-                            <Input
-                                type="password"
-                                name="password"
-                                icon={FiLock}
-                                label="Password"
-                                placeholder="*******"
-                                mb={1}
-                            />
-                            <Input
-                                type="password"
-                                name="password_confirmation"
-                                icon={FiLock}
-                                label="Password Confirmation"
-                                placeholder="*******"
-                                mb={1}
-                            />
-                            <CustomFormButton
-                                title="Register"
-                                onClick={() => {}}
-                                variant="contained"
-                                loading={false}
-                            />
-                            <Typography variant="h6" sx={{ mt: 2 }}>
-                                Or
-                            </Typography>
-                            <CustomFormBtnLink
-                                title="Login"
-                                color="primary"
-                                fullWidth={true}
-                                to="/"
-                                component={Link}
-                            />
-                        </Form>
+                        <CustomFormButton
+                            title="Register"
+                            onClick={() => {}}
+                            variant="contained"
+                            loading={false}
+                            sx={{ mt: 2 }}
+                        />
+                        <Typography variant="h6" sx={{ mt: 2 }}>
+                            Or
+                        </Typography>
+                        <CustomFormBtnLink
+                            title="Login"
+                            color="primary"
+                            fullWidth={true}
+                            to="/"
+                            component={Link}
+                        />
                     </CardContent>
                 </Card>
             </CardContainer>
