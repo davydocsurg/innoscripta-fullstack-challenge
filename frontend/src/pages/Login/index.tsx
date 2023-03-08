@@ -15,6 +15,8 @@ import schema from "./validation/schema";
 import Input from "../../components/Form/Input";
 import { FiLock, FiMail } from "react-icons/fi";
 import { CardContainer, CustomContainer } from "../shared/styles";
+import { CustomFormBtnLink } from "../../components/Form/Buttons";
+import { Link } from "react-router-dom";
 
 type LoginProps = {};
 
@@ -65,16 +67,16 @@ const Login = (): React.ReactElement => {
                                 Login
                             </Button>
 
-                            <Button
-                                fullWidth
-                                size="large"
-                                sx={{ mt: 3 }}
+                            <Typography variant="h6" sx={{ mt: 2 }}>
+                                Or
+                            </Typography>
+                            <CustomFormBtnLink
+                                title="Register"
                                 color="primary"
-                                // to="/sign-up"
-                                // component={Link}
-                            >
-                                Create account
-                            </Button>
+                                fullWidth={true}
+                                to="/register"
+                                component={Link}
+                            />
                         </Form>
                     </CardContent>
                 </Card>

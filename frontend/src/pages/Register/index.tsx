@@ -13,6 +13,7 @@ import {
     CustomFormButton,
     CustomFormBtnLink,
 } from "../../components/Form/Buttons";
+import { Link } from "react-router-dom";
 
 const Register = (): React.ReactElement => {
     const form = useForm({ schema });
@@ -119,7 +120,8 @@ const Register = (): React.ReactElement => {
                                 title="Login"
                                 color="primary"
                                 fullWidth={true}
-                                to="/login"
+                                to="/"
+                                component={Link}
                             />
                         </Form>
                     </CardContent>
