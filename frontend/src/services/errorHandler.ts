@@ -59,26 +59,15 @@ export default function errorHandler(error: AxiosError): ErrorProps {
 
     console.error("error: ", error);
     if (error.response) {
-        console.log(".........####################..............");
-        console.log(error.response.data);
-
         /**
          * The request was made and the server responded with a status code
          * that falls out of the range of 2xx
          */
         if ((error.response.data as APIError).errors.email) {
-            // if ((error.response.data as A).email) {
-            console.log(
-                // error.response.data.response.data.errors.email,
-                "error.response.data.response.data.errors.email"
-            );
-            // }
             errorMessage = (error.response.data as APIError).errors.email[0];
             errorStatus = (error.response.data as APIError).status;
         }
     } else if (error.request) {
-        console.log(".......................");
-
         /**
          * The request was made but no response was received, `error.request`
          * is an instance of XMLHttpRequest in the browser and an instance of

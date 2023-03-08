@@ -54,6 +54,8 @@ export const sidebarData = [
 ];
 
 export const drawerWidth = 230;
+export const authToken = "auth-token";
+export const authUser = "auth-user";
 
 export const API_BASE_URL = "http://localhost:8000/api/";
 export {

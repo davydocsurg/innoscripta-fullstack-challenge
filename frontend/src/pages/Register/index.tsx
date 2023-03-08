@@ -39,9 +39,9 @@ const Register = (): React.ReactElement => {
             const toast = new Toast().loading();
 
             try {
-                const res = await api.post("/register", data);
-                console.log(res);
+                await api.post("/register", data);
                 setLoading(false);
+                toast.success("Registration successful");
             } catch (error: any) {
                 const { message } = errorHandler(error);
                 // console.error(message, "\n", error);
