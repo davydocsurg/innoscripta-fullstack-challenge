@@ -1,6 +1,6 @@
 import { ToastOptions, UpdateOptions } from "react-toastify";
 
-import { errorColor, successColor } from "styles/variables";
+import { errorColor, successColor } from "../../../styles/variables";
 
 const defaultPatterns: ToastOptions = {
     position: "top-right",
@@ -9,60 +9,58 @@ const defaultPatterns: ToastOptions = {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-    progress: undefined
+    progress: undefined,
 };
 
 export default class Style {
-
     public static success: ToastOptions = {
         ...defaultPatterns,
-        theme: "colored",       
+        theme: "colored",
         style: {
             backgroundColor: successColor,
-        }                
+        },
     };
 
     public static error: ToastOptions = {
         ...defaultPatterns,
-        theme: "colored",    
+        theme: "colored",
         style: {
             backgroundColor: errorColor,
-        }                
-    }
+        },
+    };
 
     public static successUpdate(
-        message:string, 
+        message: string,
         optionsParam: object = {}
     ): UpdateOptions<unknown> {
-        return ({
+        return {
             ...defaultPatterns,
             render: message,
             type: "success",
             isLoading: false,
-            theme: "colored",       
+            theme: "colored",
             style: {
                 backgroundColor: successColor,
             },
-            ...optionsParam       
-        });         
-    };
+            ...optionsParam,
+        };
+    }
 
     public static errorUpdate(
-        message:string, 
+        message: string,
         optionsParam: object = {}
     ): UpdateOptions<unknown> {
-        return ({
+        return {
             ...defaultPatterns,
             render: message,
             type: "error",
             position: "top-right",
             isLoading: false,
-            theme: "colored",    
+            theme: "colored",
             style: {
                 backgroundColor: errorColor,
             },
-            ...optionsParam        
-        });         
-    };
-
+            ...optionsParam,
+        };
+    }
 }
