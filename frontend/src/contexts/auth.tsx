@@ -6,7 +6,7 @@ import {
     useState,
 } from "react";
 import { authToken, authUser } from "../constants";
-import { api } from "../services";
+import { api, endPoints } from "../services";
 
 type User = {
     id: number;
@@ -53,7 +53,7 @@ export const AuthProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
     });
 
     const login = useCallback(async ({ email, password }: LoginRequest) => {
-        const response = await api.post("/login", {
+        const response = await api.post(endPoints.login, {
             email,
             password,
         });

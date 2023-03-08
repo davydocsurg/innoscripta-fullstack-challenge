@@ -20,6 +20,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { backgroundColor } from "../../styles";
 import { Toast } from "../../utils/toast";
 import { useAuth } from "../../contexts";
+import { navUrl } from "../../services";
 
 type LoginFormData = {
     email: string;
@@ -39,6 +40,8 @@ const Login = (): React.ReactElement => {
             try {
                 await login({ ...data });
                 toast.dismiss();
+
+                navigate(navUrl.dashboard);
             } catch (error: any) {
                 console.error(error);
 

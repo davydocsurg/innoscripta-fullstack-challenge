@@ -15,7 +15,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { backgroundColor } from "../../styles";
 import { Toast } from "../../utils/toast";
-import { api, errorHandler } from "../../services";
+import { api, endPoints, errorHandler } from "../../services";
 
 type RegistrationFormData = {
     first_name: string;
@@ -39,7 +39,7 @@ const Register = (): React.ReactElement => {
             const toast = new Toast().loading();
 
             try {
-                await api.post("/register", data);
+                await api.post(endPoints.register, data);
                 setLoading(false);
                 toast.success("Registration successful");
             } catch (error: any) {

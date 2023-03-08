@@ -1,4 +1,5 @@
 import api from "./api";
 import errorHandler from "./errorHandler";
+import { endPoints, navUrl } from "./endPoints";
 
-export { api, errorHandler };
+export { api, endPoints, navUrl, errorHandler };
