@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { MdOutlineAlternateEmail, MdOutlineDescription } from "react-icons/md";
 import { CardContainer, CustomContainer } from "../shared/styles";
 import logo from "../../assets/logo.svg";
@@ -13,11 +13,30 @@ import {
     CustomFormButton,
     CustomFormBtnLink,
 } from "../../components/Form/Buttons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { backgroundColor } from "../../styles";
+import { Toast } from "../../utils/toast";
+
+type RegistrationFormData = {
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+};
 
 const Register = (): React.ReactElement => {
     const form = useForm({ schema });
+    const navigate = useNavigate();
+
+    const handleSubmit = useCallback(
+        async (data: RegistrationFormData) => {
+            await form.validation(data);
+
+            const toast = new Toast().loading();
+        },
+        [form, navigate]
+    );
 
     const registrationFormFields = [
         {

@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import IGridField from "../../../components/Form/FormBuilder/types/IGridField";
 import ISelectProps from "../../../components/Form/Select/ISelectProps";
 
-import Toast from "../toast/Toast";
+import Toast from "../../../utils/toast/Toast";
 
 import getValidationsErrors from "../../../utils/getValidationErrors";
 

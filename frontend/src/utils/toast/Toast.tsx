@@ -8,7 +8,7 @@ export default class Toast {
     }
 
     public loading(
-        content: ToastContent<unknown> = "Wait...",
+        content: ToastContent<unknown> = "Loading...",
         options?: ToastOptions<{}> | undefined
     ) {
         this.id = toast.loading(content, options);
@@ -31,7 +31,7 @@ export default class Toast {
     }
 
     public error(
-        message: string = "Oops... Something went wrong",
+        message: string = "Oops...Something went wrong",
         options?: ToastOptions<{}> | undefined
     ) {
         if (this.id) {
