@@ -31,6 +31,8 @@ const Register = (): React.ReactElement => {
 
     const handleSubmit = useCallback(
         async (data: RegistrationFormData) => {
+            console.log("registering...");
+
             await form.validation(data);
 
             const toast = new Toast().loading();
@@ -90,27 +92,28 @@ const Register = (): React.ReactElement => {
                         <Typography variant="h4" style={{ marginBottom: 4 }}>
                             Create an account
                         </Typography>
-                        <FormRig ref={form.ref} onSubmit={() => {}}>
+                        <FormRig ref={form.ref} onSubmit={handleSubmit}>
                             <FormBuilder fields={registrationFormFields} />
-                        </FormRig>
 
-                        <CustomFormButton
-                            title="Register"
-                            onClick={() => {}}
-                            variant="contained"
-                            loading={false}
-                            sx={{ mt: 2 }}
-                        />
-                        <Typography variant="h6" sx={{ mt: 2 }}>
-                            Or
-                        </Typography>
-                        <CustomFormBtnLink
-                            title="Login"
-                            color="primary"
-                            fullWidth={true}
-                            to="/"
-                            component={Link}
-                        />
+                            <CustomFormButton
+                                title="Register"
+                                onClick={() => {}}
+                                variant="contained"
+                                loading={false}
+                                sx={{ mt: 2 }}
+                                type="submit"
+                            />
+                            <Typography variant="h6" sx={{ mt: 2 }}>
+                                Or
+                            </Typography>
+                            <CustomFormBtnLink
+                                title="Login"
+                                color="primary"
+                                fullWidth={true}
+                                to="/"
+                                component={Link}
+                            />
+                        </FormRig>
                     </CardContent>
                 </Card>
             </CardContainer>
