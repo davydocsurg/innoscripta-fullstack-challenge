@@ -9,6 +9,7 @@ import { useTheme } from "@mui/material/styles";
 import List from "./List";
 import { drawerWidth } from "../../../constants";
 import { DrawerHeader } from "../styles";
+import { sidebarBackgroundColor } from "../../../styles";
 
 interface IProps {
     setOpen: Dispatch<SetStateAction<boolean>>;
@@ -33,6 +34,7 @@ const Drawer: React.FC<IProps> = ({ setOpen, open }) => {
                 "& .MuiDrawer-paper": {
                     width: drawerWidth,
                     boxSizing: "border-box",
+                    backgroundColor: sidebarBackgroundColor,
                 },
             }}
             variant="persistent"
