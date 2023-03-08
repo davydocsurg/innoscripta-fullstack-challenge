@@ -1,4 +1,47 @@
 import { AxiosError } from "axios";
+import {
+    BAD_GATEWAY,
+    BAD_REQUEST,
+    CONFLICT,
+    DEFAULT_ERROR_MESSAGE,
+    EXPECTATION_FAILED,
+    FAILED_DEPENDENCY,
+    FORBIDDEN,
+    GATEWAY_TIMEOUT,
+    GONE,
+    HTTP_VERSION_NOT_SUPPORTED,
+    IM_A_TEAPOT,
+    INSUFFICIENT_STORAGE,
+    LENGTH_REQUIRED,
+    LOCKED,
+    LOOP_DETECTED,
+    METHOD_NOT_ALLOWED,
+    MISDIRECTED_REQUEST,
+    NETWORK_AUTHENTICATION_REQUIRED,
+    NETWORK_CONNECT_TIMEOUT_ERROR,
+    NETWORK_READ_TIMEOUT_ERROR,
+    NOT_ACCEPTABLE,
+    NOT_EXTENDED,
+    NOT_FOUND,
+    NOT_IMPLEMENTED,
+    PRECONDITION_FAILED,
+    PROXY_AUTH_REQUIRED,
+    REQUESTED_RANGE_NOT_SATISFIABLE,
+    REQUEST_ENTITY_TOO_LARGE,
+    REQUEST_HEADER_FIELDS_TOO_LARGE,
+    REQUEST_TIMEOUT,
+    REQUEST_URI_TOO_LONG,
+    SERVER_ERROR,
+    SERVICE_UNAVAILABLE,
+    TOO_MANY_REQUESTS,
+    UNAUTHORIZED,
+    UNAVAILABLE_FOR_LEGAL_REASONS,
+    UNORDERED_COLLECTION,
+    UNPROCESSABLE_ENTITY,
+    UNSUPPORTED_MEDIA_TYPE,
+    UPGRADE_REQUIRED,
+    VARIANT_ALSO_NEGOTIATES,
+} from "../constants";
 
 type ErrorProps = {
     message: string;
@@ -46,124 +89,128 @@ function getMessageByStatus(status: number) {
 
     switch (status) {
         case 400:
-            errorMessage = "Bad Request";
+            errorMessage = BAD_REQUEST;
             break;
         case 401:
-            errorMessage = "Unauthorized";
+            errorMessage = UNAUTHORIZED;
             break;
         case 403:
-            errorMessage = "Forbidden";
+            errorMessage = FORBIDDEN;
             break;
         case 404:
-            errorMessage = "Not Found";
+            errorMessage = NOT_FOUND;
             break;
         case 405:
-            errorMessage = "Method Not Allowed";
+            errorMessage = METHOD_NOT_ALLOWED;
             break;
         case 406:
-            errorMessage = "Not Acceptable";
+            errorMessage = NOT_ACCEPTABLE;
             break;
         case 407:
-            errorMessage = "Proxy Authentication Required";
+            errorMessage = PROXY_AUTH_REQUIRED;
             break;
         case 408:
-            errorMessage = "Request Timeout";
+            errorMessage = REQUEST_TIMEOUT;
             break;
         case 409:
-            errorMessage = "Conflict";
+            errorMessage = CONFLICT;
             break;
         case 410:
-            errorMessage = "Gone";
+            errorMessage = GONE;
             break;
         case 411:
-            errorMessage = "Length Required";
+            errorMessage = LENGTH_REQUIRED;
             break;
         case 412:
-            errorMessage = "Precondition Failed";
+            errorMessage = PRECONDITION_FAILED;
             break;
         case 413:
-            errorMessage = "Payload Too Large";
+            errorMessage = REQUEST_ENTITY_TOO_LARGE;
             break;
         case 414:
-            errorMessage = "URI Too Long";
+            errorMessage = REQUEST_URI_TOO_LONG;
             break;
         case 415:
-            errorMessage = "Unsupported Media Type";
+            errorMessage = UNSUPPORTED_MEDIA_TYPE;
             break;
         case 416:
-            errorMessage = "Range Not Satisfiable";
+            errorMessage = REQUESTED_RANGE_NOT_SATISFIABLE;
             break;
         case 417:
-            errorMessage = "Expectation Failed";
+            errorMessage = EXPECTATION_FAILED;
             break;
         case 418:
-            errorMessage = "I'm a teapot";
+            errorMessage = IM_A_TEAPOT;
             break;
         case 421:
-            errorMessage = "Misdirected Request";
+            errorMessage = MISDIRECTED_REQUEST;
             break;
         case 422:
-            errorMessage = "Unprocessable Entity";
+            errorMessage = UNPROCESSABLE_ENTITY;
             break;
         case 423:
-            errorMessage = "Locked";
+            errorMessage = LOCKED;
             break;
         case 424:
-            errorMessage = "Failed Dependency";
+            errorMessage = FAILED_DEPENDENCY;
             break;
         case 425:
-            errorMessage = "Too Early";
+            errorMessage = UNORDERED_COLLECTION;
             break;
         case 426:
-            errorMessage = "Upgrade Required";
+            errorMessage = UPGRADE_REQUIRED;
             break;
         case 428:
-            errorMessage = "Precondition Required";
+            errorMessage = PRECONDITION_FAILED;
             break;
         case 429:
-            errorMessage = "Too Many Requests";
+            errorMessage = TOO_MANY_REQUESTS;
             break;
         case 431:
-            errorMessage = "Request Header Fields Too Large";
+            errorMessage = REQUEST_HEADER_FIELDS_TOO_LARGE;
             break;
         case 451:
-            errorMessage = "Unavailable For Legal Reasons";
+            errorMessage = UNAVAILABLE_FOR_LEGAL_REASONS;
             break;
         case 500:
-            errorMessage = "Internal Server Error";
+            errorMessage = SERVER_ERROR;
             break;
         case 501:
-            errorMessage = "Not Implemented";
+            errorMessage = NOT_IMPLEMENTED;
             break;
         case 502:
-            errorMessage = "Bad Gateway";
+            errorMessage = BAD_GATEWAY;
             break;
         case 503:
-            errorMessage = "Service Unavailable";
+            errorMessage = SERVICE_UNAVAILABLE;
             break;
         case 504:
-            errorMessage = "Gateway Timeout";
+            errorMessage = GATEWAY_TIMEOUT;
             break;
         case 505:
-            errorMessage = "HTTP Version Not Supported";
+            errorMessage = HTTP_VERSION_NOT_SUPPORTED;
             break;
         case 506:
-            errorMessage = "Variant Also Negotiates";
+            errorMessage = VARIANT_ALSO_NEGOTIATES;
             break;
         case 507:
-            errorMessage = "Insufficient Storage";
+            errorMessage = INSUFFICIENT_STORAGE;
             break;
         case 508:
-            errorMessage = "Loop Detected";
+            errorMessage = LOOP_DETECTED;
             break;
         case 510:
-            errorMessage = "Not Extended";
+            errorMessage = NOT_EXTENDED;
             break;
         case 511:
-            errorMessage = "Network Authentication Required";
+            errorMessage = NETWORK_AUTHENTICATION_REQUIRED;
             break;
+        case 598:
+            errorMessage = NETWORK_READ_TIMEOUT_ERROR;
+        case 599:
+            errorMessage = NETWORK_CONNECT_TIMEOUT_ERROR;
         default:
-            errorMessage = "Unknown Error";
+            errorMessage = DEFAULT_ERROR_MESSAGE;
     }
 
     return errorMessage;

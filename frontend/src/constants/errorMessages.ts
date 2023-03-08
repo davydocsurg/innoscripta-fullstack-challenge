@@ -86,6 +86,7 @@ const UNAVAILABLE_FOR_LEGAL_REASONS = "Unavailable for legal reasons";
 const SERVER_ERROR = "Something has gone wrong, please try again";
 
 // HTTP 501
+
 const NOT_IMPLEMENTED = "Not implemented";
 
 // HTTP 502
@@ -117,6 +118,15 @@ const NOT_EXTENDED = "Not extended";
 
 // HTTP 511
 const NETWORK_AUTHENTICATION_REQUIRED = "Network authentication required";
+
+// HTTP 598
+const NETWORK_READ_TIMEOUT_ERROR = "Network read timeout error";
+
+// HTTP 599
+const NETWORK_CONNECT_TIMEOUT_ERROR = "Network connect timeout error";
+
+// default error message
+const DEFAULT_ERROR_MESSAGE = "Something went wrong. Please try again";
 
 export {
     BAD_REQUEST,
@@ -159,4 +169,7 @@ export {
     BANDWIDTH_LIMIT_EXCEEDED,
     NOT_EXTENDED,
     NETWORK_AUTHENTICATION_REQUIRED,
+    NETWORK_READ_TIMEOUT_ERROR,
+    NETWORK_CONNECT_TIMEOUT_ERROR,
+    DEFAULT_ERROR_MESSAGE,
 };
