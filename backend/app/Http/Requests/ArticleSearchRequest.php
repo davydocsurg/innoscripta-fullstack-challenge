@@ -18,7 +18,7 @@ class ArticleSearchRequest extends FormRequest
     {
         return [
             'keyword' => 'required|string|min:2|max:20',
-            'source' => 'required|string|in:nytimes,guardian',
+            'source' => 'required|string|in:nytimes,guardian,newsapi',
             'per_page' => 'nullable|integer|min:1|max:100',
             'current_page' => 'nullable|integer|min:1|max:20',
             'begin_date' => 'nullable|date_format:Ymd',
