@@ -15,6 +15,7 @@ import { sidebarData } from "../../../../constants";
 // import { useSettings } from 'hooks/settings';
 
 import { Link } from "./styles";
+import { useAuth } from "../../../../contexts";
 
 interface IProps {
     open: boolean;
@@ -27,14 +28,14 @@ interface IItem {
 }
 
 const List: React.FC<IProps> = ({ open }) => {
-    //   const { signOut } = useAuth();
+    const { logout } = useAuth();
     //   const { saveSettingsBackend } = useSettings();
 
     async function handleClick(item: IItem) {
-        // if (item.title === 'Logout') {
-        //   await saveSettingsBackend();
-        //   signOut();
-        // }
+        if (item.title === "Logout") {
+            //   await saveSettingsBackend();
+            logout();
+        }
     }
 
     return (

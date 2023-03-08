@@ -67,7 +67,11 @@ export const AuthProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         setData({ token, user });
     }, []);
 
-    const logout = useCallback(() => {}, []);
+    const logout = useCallback(() => {
+        localStorage.removeItem(authToken);
+        localStorage.removeItem(authUser);
+        setData({} as AuthState);
+    }, []);
 
     const updateUser = useCallback((user: User) => {}, []);
 
