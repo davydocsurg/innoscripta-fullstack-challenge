@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Form } from "@unform/web";
 import {
     Button,
@@ -16,13 +16,40 @@ import Input from "../../components/Form/Input";
 import { FiLock, FiMail } from "react-icons/fi";
 import { CardContainer, CustomContainer } from "../shared/styles";
 import { CustomFormBtnLink } from "../../components/Form/Buttons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { backgroundColor } from "../../styles";
+import { Toast } from "../../utils/toast";
+import { useAuth } from "../../contexts";
 
-type LoginProps = {};
+type LoginFormData = {
+    email: string;
+    password: string;
+};
 
 const Login = (): React.ReactElement => {
+    const navigate = useNavigate();
+    const { login } = useAuth();
     const form = useForm({ schema });
+
+    const handleSubmit = useCallback(
+        async (data: LoginFormData) => {
+            await form.validation(data);
+            const toast = new Toast().loading();
+
+            try {
+                await login({ ...data });
+                toast.dismiss();
+            } catch (error: any) {
+                console.error(error);
+
+                toast.error(
+                    "Invalid credentials. Check your email and password and try again."
+                );
+            }
+        },
+        [login, form, navigate]
+    );
+
     return (
         <CustomContainer>
             <img src={logo} alt="Innoscripta" />
@@ -40,7 +67,7 @@ const Login = (): React.ReactElement => {
                         <Typography variant="h6" style={{ marginBottom: 4 }}>
                             Login to your account
                         </Typography>
-                        <Form ref={form.ref} onSubmit={() => {}}>
+                        <Form ref={form.ref} onSubmit={handleSubmit}>
                             <Input
                                 type="text"
                                 name="email"

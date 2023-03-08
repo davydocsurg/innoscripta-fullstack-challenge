@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AppProvider } from "./contexts";
 
 // locals
 import Routes from "./routes";
@@ -12,9 +13,11 @@ function App() {
     return (
         <ThemeProvider theme={CMUITheme}>
             <BrowserRouter>
-                <ToastContainer />
+                <AppProvider>
+                    <ToastContainer />
 
-                <Routes />
+                    <Routes />
+                </AppProvider>
             </BrowserRouter>
         </ThemeProvider>
     );

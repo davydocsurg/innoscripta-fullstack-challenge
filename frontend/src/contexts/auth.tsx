@@ -40,7 +40,7 @@ type LoginRequest = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
-    const [data, setData] = useState(() => {
+    const [data, setData] = useState<AuthState>(() => {
         const token = localStorage.getItem(authToken);
         const user = localStorage.getItem(authUser);
 
@@ -52,12 +52,16 @@ export const AuthProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         return {} as AuthState;
     });
 
-    const login = useCallback(async ({ email, password }: LoginCredentials) => {
-        const response = await api.post<LoginRequest>("/login", {
+    const login = useCallback(async ({ email, password }: LoginRequest) => {
+        const response = await api.post("/login", {
             email,
             password,
         });
-        console.log(response.data);
+        const { token, user } = response.data;
+        localStorage.setItem(authToken, token);
+        localStorage.setItem(authUser, JSON.stringify(user));
+
+        setData({ token, user });
     }, []);
 
     const logout = useCallback(() => {}, []);
