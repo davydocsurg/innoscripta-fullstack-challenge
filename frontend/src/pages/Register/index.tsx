@@ -14,6 +14,7 @@ import {
     CustomFormBtnLink,
 } from "../../components/Form/Buttons";
 import { Link } from "react-router-dom";
+import { backgroundColor } from "../../styles";
 
 const Register = (): React.ReactElement => {
     const form = useForm({ schema });
@@ -53,7 +54,7 @@ const Register = (): React.ReactElement => {
         <CustomContainer>
             <img src={logo} alt="Innoscripta" />
             <CardContainer>
-                <Card sx={{ minWidth: 275 }}>
+                <Card sx={{ minWidth: 275, bgcolor: backgroundColor }}>
                     <CardContent
                         sx={{
                             maxWidth: 400,
