@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\APIs\GuardianAPI\GuardianAPIService;
-use App\Http\APIs\NewsDataAPI\NewsDataAPIService;
+use App\Http\APIs\NewsAPI\NewsAPIService;
 use App\Http\APIs\NYTimesAPI\NYTimesAPIService;
 use App\Http\Requests\ArticleSearchRequest;
 use Illuminate\Http\Request;
@@ -147,7 +147,7 @@ class ArticleController extends Controller
     public function searchWithNewsAPI(Request $request)
     {
         list($keyword, $perPage, $currentPage) = $this->getRequestInputs($request);
-        $api = new NewsDataAPIService();
+        $api = new NewsAPIService();
         $response = $api->searchArticles($keyword);
 
         $articles = $response->data['results'];

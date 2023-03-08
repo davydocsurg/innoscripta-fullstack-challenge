@@ -9,12 +9,11 @@ class NewsAPIService extends BaseNewsAPI
         parent::__construct(config('services.newsapi.key'));
     }
 
-    public function searchArticles($keyword, $filters = [])
+    public function searchArticles($keyword, $beginDate, $filters = [])
     {
         $queries = [
-            'q' => $keyword,
-            'language' => 'en',
-
+            'keyword' => $keyword,
+            'articlesSortBy' => $beginDate,
         ];
 
         return $this->buildCustomRequestUrl($queries)->sendRequest();
