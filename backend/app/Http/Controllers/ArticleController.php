@@ -63,7 +63,7 @@ class ArticleController extends Controller
                 break;
             case 'newsdata';
                 try {
-                    $paginateArticles = $this->searchWithNewsData($request);
+                    $paginateArticles = $this->searchWithNewsAPI($request);
                     if ($paginateArticles->isEmpty()) {
                         return response()->json([
                             'status' => false,
@@ -140,11 +140,11 @@ class ArticleController extends Controller
     }
 
     /**
-     * Search NewsData articles
+     * Search NewsAPI articles
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function searchWithNewsData(Request $request)
+    public function searchWithNewsAPI(Request $request)
     {
         list($keyword, $perPage, $currentPage) = $this->getRequestInputs($request);
         $api = new NewsDataAPIService();
