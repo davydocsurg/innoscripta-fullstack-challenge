@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { MdOutlineAlternateEmail, MdOutlineDescription } from "react-icons/md";
 import { CardContainer, CustomContainer } from "../shared/styles";
 import logo from "../../assets/logo.svg";
@@ -15,6 +15,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { backgroundColor } from "../../styles";
 import { Toast } from "../../utils/toast";
+import { api } from "../../services";
 
 type RegistrationFormData = {
     first_name: string;
@@ -27,14 +28,25 @@ type RegistrationFormData = {
 const Register = (): React.ReactElement => {
     const form = useForm({ schema });
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = useCallback(
         async (data: RegistrationFormData) => {
-            console.log("registering...");
+            setLoading(true);
 
             await form.validation(data);
 
             const toast = new Toast().loading();
+
+            try {
+                const res = await api.post("/register", data);
+                console.log(res);
+                setLoading(false);
+            } catch (error: unknown) {
+                console.error(error);
+
+                setLoading(false);
+            }
         },
         [form, navigate]
     );
@@ -96,9 +108,8 @@ const Register = (): React.ReactElement => {
 
                             <CustomFormButton
                                 title="Register"
-                                onClick={() => {}}
                                 variant="contained"
-                                loading={false}
+                                loading={loading}
                                 sx={{ mt: 2 }}
                                 type="submit"
                             />
