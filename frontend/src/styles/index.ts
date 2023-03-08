@@ -1,3 +1,4 @@
 import CMUITheme from "./CMUITheme";
+import { backgroundColor, sidebarBackgroundColor } from "./variables";
 
-export { CMUITheme };
+export { CMUITheme, backgroundColor, sidebarBackgroundColor };
