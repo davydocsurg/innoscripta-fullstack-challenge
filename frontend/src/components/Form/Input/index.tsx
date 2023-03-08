@@ -7,10 +7,10 @@ import { FiAlertCircle } from "react-icons/fi";
 // local imports
 import type CustomInputProps from "./CustomInputProps";
 import { Prefix } from "./styles";
-import { Error } from "@/styles/styled-components";
-import { errorColor } from "@/styles/variables";
+import { Error } from "../../../styles/styled-components";
+import { errorColor } from "../../../styles/variables";
 import { putMask } from "./hooks/putMask";
-import { Mask } from "@/utils";
+import { Mask } from "../../../utils";
 
 /**
  * Input component

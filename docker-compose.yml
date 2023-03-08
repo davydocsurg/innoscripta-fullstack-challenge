@@ -10,7 +10,7 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./:/innoscripta
+      - ./backend:/var/www/html
     depends_on:
       - database
     networks:
@@ -22,17 +22,17 @@ services:
     image: mysql:8.0
     container_name: innoscripta-database
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE:-innoscripta}
-      # MYSQL_USER: ${DB_USERNAME:-root}
+      # DB_DATABASE: innoscripta
+      # DB_USERNAME: root
       # MYSQL_PASSWORD: ${DB_PASSWORD:-root}
-      # MYSQL_PORT: ${MYSQL_PORT:-8889}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
+      # MYSQL_DB: ${MYSQL_PORT:-8889}
+      MYSQL_ROOT_PASSWORD: password
     ports:
       - 3306:3306
     networks:
       - innoscripta-network
     volumes:
-      - ./mysql/data:/var/lib/mysql
+      - innoscripta-database:/var/lib/mysql
 
   # frontend:
   #   build: ./frontend
