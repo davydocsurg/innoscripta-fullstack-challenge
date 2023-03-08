@@ -2,11 +2,14 @@ import React from "react";
 import { MdOutlineAlternateEmail, MdOutlineDescription } from "react-icons/md";
 import { CardContainer, CustomContainer } from "../shared/styles";
 import logo from "../../assets/logo.svg";
-import { FiLock } from "react-icons/fi";
+import { FiLock, FiMail } from "react-icons/fi";
 import FormBuilder from "../../components/Form/FormBuilder";
-import { Card, CardContent } from "@mui/material";
+import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useForm } from "../../commons/hooks/form/useForm";
 import schema from "./validation/schema";
+import Input from "../../components/Form/Input";
+import { Form } from "@unform/web";
+import CustomFormButton from "../../components/Form/Buttons";
 
 const Register = (): React.ReactElement => {
     const form = useForm({ schema });
@@ -53,7 +56,64 @@ const Register = (): React.ReactElement => {
                             margin: "0 auto",
                         }}
                     >
-                        <FormBuilder fields={registrationFormFields} />
+                        {/* <FormBuilder fields={registrationFormFields} /> */}
+                        <Typography variant="h6" style={{ marginBottom: 4 }}>
+                            Create an account
+                        </Typography>
+                        <Form ref={form.ref} onSubmit={() => {}}>
+                            <Input
+                                type="text"
+                                name="First Name"
+                                icon={MdOutlineDescription}
+                                label="First Name"
+                                placeholder="David"
+                                mb={1}
+                            />
+
+                            <Input
+                                type="text"
+                                name="Last Name"
+                                icon={MdOutlineDescription}
+                                label="Last Name"
+                                placeholder="Ndubuisi"
+                                mb={1}
+                            />
+
+                            <Input
+                                type="text"
+                                name="email"
+                                icon={FiMail}
+                                label="Email"
+                                placeholder="you@example.com"
+                                mb={1}
+                            />
+                            <Input
+                                type="password"
+                                name="password"
+                                icon={FiLock}
+                                label="Password"
+                                placeholder="*******"
+                                mb={1}
+                            />
+                            <Input
+                                type="password"
+                                name="password_confirmation"
+                                icon={FiLock}
+                                label="Password Confirmation"
+                                placeholder="*******"
+                                mb={1}
+                            />
+                            <CustomFormButton
+                                title="Register"
+                                onClick={() => {}}
+                                variant="contained"
+                                loading={false}
+                            />
+                            <Typography variant="h6" sx={{ marginBottom: 4 }}>
+                                Or
+                            </Typography>
+                            <CustomFormButton title="Login" />
+                        </Form>
                     </CardContent>
                 </Card>
             </CardContainer>
