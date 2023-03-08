@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\APIs\NewsDataAPI;
+namespace App\Http\APIs\NewsAPI;
 
-class NewsDataAPIService extends BaseNewsDataAPI
+class NewsAPIService extends BaseNewsAPI
 {
     public function __construct()
     {
-        parent::__construct(config('services.newsdata.key'));
+        parent::__construct(config('services.newsapi.key'));
     }
 
     public function searchArticles($keyword, $filters = [])
