@@ -1,6 +1,6 @@
 import { ToastOptions, UpdateOptions } from "react-toastify";
 
-import { errorColor, successColor } from "../../../styles/variables";
+import { errorColor, successColor } from "../../styles/variables";
 
 const defaultPatterns: ToastOptions = {
     position: "top-right",

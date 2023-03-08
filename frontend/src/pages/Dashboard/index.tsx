@@ -1,14 +1,62 @@
-import { Card } from "@mui/material";
 import React from "react";
-import DashboardComp from "../../components/DashboardComps";
+import { Card } from "@mui/material";
+import { Form as FormRig } from "@unform/web";
+import { MainDefault } from "../../styles/styled-components";
+import { Filters } from "./styles";
+import IGridField from "../../components/Form/FormBuilder/types/IGridField";
+
+const fieldsFilter: IGridField[] = [
+    {
+        gridSize: {
+            lg: 3,
+            md: 6,
+            sm: 12,
+        },
+        type: "text",
+        name: "keyword",
+        label: "Keywords",
+    },
+    {
+        gridSize: {
+            lg: 3,
+            md: 6,
+            sm: 12,
+        },
+        type: "text",
+        name: "category",
+        label: "Category",
+        placeholder: "crypto",
+    },
+    {
+        gridSize: {
+            lg: 3,
+            md: 6,
+            sm: 12,
+        },
+        type: "text",
+        name: "source",
+        label: "Source",
+        placeholder: "The Guardian",
+    },
+    {
+        gridSize: {
+            lg: 3,
+            md: 6,
+            sm: 12,
+        },
+        type: "date",
+        name: "date",
+        label: "Date",
+    },
+];
 
 const Dashboard: React.FC = () => {
     return (
-        <DashboardComp>
-            <Card>
-                <h1>Dashboard</h1>
-            </Card>
-        </DashboardComp>
+        <MainDefault>
+            <Filters>
+                <FormRig onSubmit={() => {}}></FormRig>
+            </Filters>
+        </MainDefault>
     );
 };
 

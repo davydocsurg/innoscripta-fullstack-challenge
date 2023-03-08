@@ -1,31 +1,79 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { MdOutlineAlternateEmail, MdOutlineDescription } from "react-icons/md";
 import { CardContainer, CustomContainer } from "../shared/styles";
 import logo from "../../assets/logo.svg";
 import { FiLock, FiMail } from "react-icons/fi";
 import FormBuilder from "../../components/Form/FormBuilder";
-import { Button, Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 import { useForm } from "../../commons/hooks/form/useForm";
 import schema from "./validation/schema";
-import Input from "../../components/Form/Input";
-import { Form } from "@unform/web";
+import { Form as FormRig } from "@unform/web";
 import {
     CustomFormButton,
     CustomFormBtnLink,
 } from "../../components/Form/Buttons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { backgroundColor } from "../../styles";
+import { Toast } from "../../utils/toast";
+import { api, endPoints, errorHandler, messages, navUrl } from "../../services";
+import { useAuth } from "../../contexts";
+
+type RegistrationFormData = {
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+};
 
 const Register = (): React.ReactElement => {
     const form = useForm({ schema });
+    const navigate = useNavigate();
+    const { loading, login, setLoading } = useAuth();
+
+    const handleSubmit = useCallback(
+        async (data: RegistrationFormData) => {
+            setLoading(true);
+
+            await form.validation(data);
+
+            const toast = new Toast().loading();
+
+            try {
+                await api.post(endPoints.register, data);
+                toast.success(messages.registerSuccess);
+                // login user
+                await login({
+                    email: data.email,
+                    password: data.password,
+                });
+
+                navigate(navUrl.dashboard);
+                setLoading(false);
+            } catch (error: any) {
+                const { message } = errorHandler(error);
+                toast.error(message);
+
+                setLoading(false);
+            }
+        },
+        [form, navigate]
+    );
 
     const registrationFormFields = [
         {
             type: "text",
-            name: "name",
+            name: "first_name",
             icon: MdOutlineDescription,
-            label: "Name",
-            placeholder: "Berta",
+            label: "First Name",
+            placeholder: "David",
+        },
+        {
+            type: "text",
+            name: "last_name",
+            icon: MdOutlineDescription,
+            label: "Last Name",
+            placeholder: "Ndubuisi",
         },
         {
             type: "email",
@@ -45,7 +93,7 @@ const Register = (): React.ReactElement => {
             type: "password",
             name: "password_confirmation",
             icon: FiLock,
-            label: "Confirm your password",
+            label: "Confirm Password",
             placeholder: "********",
         },
     ];
@@ -61,58 +109,18 @@ const Register = (): React.ReactElement => {
                             margin: "0 auto",
                         }}
                     >
-                        {/* <FormBuilder fields={registrationFormFields} /> */}
                         <Typography variant="h4" style={{ marginBottom: 4 }}>
                             Create an account
                         </Typography>
-                        <Form ref={form.ref} onSubmit={() => {}}>
-                            <Input
-                                type="text"
-                                name="First Name"
-                                icon={MdOutlineDescription}
-                                label="First Name"
-                                placeholder="David"
-                                mb={1}
-                            />
+                        <FormRig ref={form.ref} onSubmit={handleSubmit}>
+                            <FormBuilder fields={registrationFormFields} />
 
-                            <Input
-                                type="text"
-                                name="Last Name"
-                                icon={MdOutlineDescription}
-                                label="Last Name"
-                                placeholder="Ndubuisi"
-                                mb={1}
-                            />
-
-                            <Input
-                                type="text"
-                                name="email"
-                                icon={FiMail}
-                                label="Email"
-                                placeholder="you@example.com"
-                                mb={1}
-                            />
-                            <Input
-                                type="password"
-                                name="password"
-                                icon={FiLock}
-                                label="Password"
-                                placeholder="*******"
-                                mb={1}
-                            />
-                            <Input
-                                type="password"
-                                name="password_confirmation"
-                                icon={FiLock}
-                                label="Password Confirmation"
-                                placeholder="*******"
-                                mb={1}
-                            />
                             <CustomFormButton
                                 title="Register"
-                                onClick={() => {}}
                                 variant="contained"
-                                loading={false}
+                                loading={loading}
+                                sx={{ mt: 2 }}
+                                type="submit"
                             />
                             <Typography variant="h6" sx={{ mt: 2 }}>
                                 Or
@@ -121,10 +129,10 @@ const Register = (): React.ReactElement => {
                                 title="Login"
                                 color="primary"
                                 fullWidth={true}
-                                to="/"
+                                to={navUrl.login}
                                 component={Link}
                             />
-                        </Form>
+                        </FormRig>
                     </CardContent>
                 </Card>
             </CardContainer>
