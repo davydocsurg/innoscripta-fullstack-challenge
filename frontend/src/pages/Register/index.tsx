@@ -15,7 +15,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { backgroundColor } from "../../styles";
 import { Toast } from "../../utils/toast";
-import { api } from "../../services";
+import { api, errorHandler } from "../../services";
 
 type RegistrationFormData = {
     first_name: string;
@@ -42,8 +42,10 @@ const Register = (): React.ReactElement => {
                 const res = await api.post("/register", data);
                 console.log(res);
                 setLoading(false);
-            } catch (error: unknown) {
-                console.error(error);
+            } catch (error: any) {
+                const { message } = errorHandler(error);
+                // console.error(message, "\n", error);
+                toast.error(message);
 
                 setLoading(false);
             }

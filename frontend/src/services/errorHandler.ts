@@ -49,26 +49,36 @@ type ErrorProps = {
 };
 
 type APIError = {
-    message: string;
+    errors: any;
     status: number;
 };
 
-export default function handleAxiosError(error: AxiosError): ErrorProps {
+export default function errorHandler(error: AxiosError): ErrorProps {
     let errorMessage = error.message;
     let errorStatus = Number(error.status) || 500;
 
-    console.error("error");
-    console.error(error);
+    console.error("error: ", error);
     if (error.response) {
+        console.log(".........####################..............");
+        console.log(error.response.data);
+
         /**
          * The request was made and the server responded with a status code
          * that falls out of the range of 2xx
          */
-        if ((error.response.data as APIError).message) {
-            errorMessage = (error.response.data as APIError).message;
+        if ((error.response.data as APIError).errors.email) {
+            // if ((error.response.data as A).email) {
+            console.log(
+                // error.response.data.response.data.errors.email,
+                "error.response.data.response.data.errors.email"
+            );
+            // }
+            errorMessage = (error.response.data as APIError).errors.email[0];
             errorStatus = (error.response.data as APIError).status;
         }
     } else if (error.request) {
+        console.log(".......................");
+
         /**
          * The request was made but no response was received, `error.request`
          * is an instance of XMLHttpRequest in the browser and an instance of
@@ -76,6 +86,7 @@ export default function handleAxiosError(error: AxiosError): ErrorProps {
          */
         errorMessage = getMessageByStatus(error.request.status);
         errorStatus = error.request.status;
+        // console.log(errorStatus, "errorStatus", errorMessage, "errorMessage");
     }
 
     return {
