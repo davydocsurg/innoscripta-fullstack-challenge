@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { List as ListMUI } from "@mui/material";
 
-import { sidebarData } from "../../../constants";
+import { sidebarData } from "../../../../constants";
 
 // import { useAuth } from 'hooks/auth';
 // import { useSettings } from 'hooks/settings';
