@@ -119,12 +119,6 @@ class ArticleController extends Controller
 
         $articles = $response->data['response']['docs'];
 
-        // save the articles to the database
-        // foreach ($articles as $article) {
-        //     NYTimesAPIService::saveArticle($article);
-        // }
-        // fetch the articles from the database
-        // $articles = NYTimesAPIService::getArticles($keyword, $beginDate, $endDate);
         $paginateArticles = $this->paginateArticles($articles, $perPage, $currentPage);
         return $paginateArticles;
 
