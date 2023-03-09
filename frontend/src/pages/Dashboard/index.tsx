@@ -3,9 +3,9 @@ import { Card } from "@mui/material";
 import { Form as FormRig } from "@unform/web";
 import { MainDefault } from "../../styles/styled-components";
 import { Filters } from "./styles";
-import IGridField from "../../components/Form/FormBuilder/types/IGridField";
+import CustomGridFields from "../../components/Form/FormBuilder/types/CustomGridFields";
 
-const fieldsFilter: IGridField[] = [
+const articleSearchFields: CustomGridFields[] = [
     {
         gridSize: {
             lg: 3,

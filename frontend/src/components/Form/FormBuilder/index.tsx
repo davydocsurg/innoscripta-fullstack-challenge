@@ -9,7 +9,7 @@ import CustomInputProps from "../Input/CustomInputProps";
 import ISelectProps from "../Select/ISelectProps";
 
 import { lgSize, mdSize, smSize, xlSize, xsSize } from "./hooks/gridSize";
-import IGridField from "./types/IGridField";
+import CustomGridFields from "./types/CustomGridFields";
 import IProps from "./types/IProps";
 
 /**
@@ -25,7 +25,7 @@ const FormBuilder: React.FC<IProps> = ({
     /**
      * Check field type and render the correct component
      */
-    function renderComponent({ gridSize, ...field }: IGridField) {
+    function renderComponent({ gridSize, ...field }: CustomGridFields) {
         if (field.type === "select") {
             return <Select {...(field as ISelectProps)} />;
         }

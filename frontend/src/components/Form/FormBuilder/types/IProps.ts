@@ -1,15 +1,15 @@
-import { GridSpacing } from '@mui/material';
-import { ResponsiveStyleValue } from '@mui/system';
+import { GridSpacing } from "@mui/material";
+import { ResponsiveStyleValue } from "@mui/system";
 
-import IGridField from './IGridField';
+import CustomGridFields from "./CustomGridFields";
 
 /**
  * Grid Props
  */
 type IGridProps = {
-    fields?: IGridField[];
-    spacing?: ResponsiveStyleValue<GridSpacing>
-    columns?: ResponsiveStyleValue<number>
+    fields?: CustomGridFields[];
+    spacing?: ResponsiveStyleValue<GridSpacing>;
+    columns?: ResponsiveStyleValue<number>;
 };
 
 export default IGridProps;
