@@ -43,9 +43,9 @@ return [
         'key' => env('GUARDIAN_API_KEY', '391ca6af-35ce-4edc-b24a-13ef92e01348'),
     ],
 
-    'newsdata' => [
-        'base_url' => 'https://newsdata.io/api/1/news',
-        'key' => env('NEWSDATA_API_KEY', 'pub_183493c19552e7486e8c5d92b8533b5886e26'),
+    'newsapi' => [
+        'base_url' => 'https://newsapi.org/v2/everything',
+        'key' => env('NEWSAPI_API_KEY', 'ab6a5f7f8c374418a21364cadbed97b7'),
     ],
 
 ];
