@@ -1,5 +1,11 @@
-import { createContext, PropsWithChildren, useCallback, useState } from "react";
-import { api } from "../services";
+import {
+    createContext,
+    PropsWithChildren,
+    useCallback,
+    useContext,
+    useState,
+} from "react";
+import { api, endPoints } from "../services";
 import { userSettings } from "../constants";
 
 type UserSettingsState = {
@@ -12,6 +18,7 @@ type UserSettingsContextData = {
     userSettings: UserSettingsState;
     saveSettings: (settings: UserSettingsState) => Promise<void>;
     getUserSettings: () => Promise<void>;
+    updateUserSettings: () => Promise<void>;
 };
 
 const UserSettingsContext = createContext<UserSettingsContextData>(
@@ -43,15 +50,41 @@ export const UserSettingsProvider: React.FC<PropsWithChildren<{}>> = ({
 
     const getUserSettings = useCallback(async () => {
         try {
-            const response = await api.get("/settings");
+            const response = await api.get(endPoints.userSettings);
             const settings = response.data;
-            localStorage.setItem(
-                userSettings as unknown as string,
-                JSON.stringify(settings)
-            );
-            setUserSettings(settings);
+
+            if (settings) {
+                await saveSettings(settings);
+            }
         } catch (error: any) {
             console.error(error);
         }
     }, []);
+
+    const updateUserSettings = useCallback(async () => {
+        try {
+            await api.patch(endPoints.userSettings);
+        } catch (error: any) {
+            console.error(error);
+        }
+    }, []);
+
+    return (
+        <UserSettingsContext.Provider
+            value={{
+                userSettings,
+                saveSettings,
+                getUserSettings,
+                updateUserSettings,
+            }}
+        >
+            {children}
+        </UserSettingsContext.Provider>
+    );
 };
+
+export function useSettings(): UserSettingsContextData {
+    const context = useContext(UserSettingsContext);
+
+    return context;
+}
