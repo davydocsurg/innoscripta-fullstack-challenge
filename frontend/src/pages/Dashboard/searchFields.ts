@@ -88,8 +88,18 @@ const articleSearchFields: CustomGridFields[] = [
             sm: 12,
         },
         type: "date",
-        name: "date",
-        label: "Date",
+        name: "from_date",
+        label: "Start Date",
+    },
+    {
+        gridSize: {
+            lg: 3,
+            md: 6,
+            sm: 12,
+        },
+        type: "date",
+        name: "end_date",
+        label: "End Date",
     },
 ];
 
