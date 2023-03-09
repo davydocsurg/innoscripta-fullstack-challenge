@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Card } from "@mui/material";
+import { Card, Pagination } from "@mui/material";
 import { Form as FormRig } from "@unform/web";
 import CiSearch from "react-icons/ci";
 
@@ -126,9 +126,12 @@ const Dashboard: React.FC = () => {
         [searchFields]
     );
 
-    // useEffect(() => {
-    //     triggerSearch();
-    // }, [searchFields, loading]);
+    const handlePagination = (
+        event: React.ChangeEvent<unknown>,
+        value: number
+    ) => {
+        setCurrentPage(value);
+    };
 
     return (
         <MainDefault>
@@ -162,6 +165,15 @@ const Dashboard: React.FC = () => {
                 {newsAPIArticles.map((newsapi, index) => (
                     <NewsAPIArticle key={newsapi.id} newsapi={newsapi} />
                 ))}
+
+                {nytimesArticles.length > 0 && (
+                    <Pagination
+                        count={lastPage}
+                        page={currentPage}
+                        onChange={handlePagination}
+                        color="standard"
+                    />
+                )}
             </ArticlesList>
         </MainDefault>
     );
