@@ -31,9 +31,9 @@ services:
     environment:
       DB_DATABASE: innoscripta
       DB_HOST: innoscripta-db
-      DB_USERNAME: root
-      MYSQL_PASSWORD: ${DB_PASSWORD:-username}
-      MYSQL_DB: ${MYSQL_PORT:-3306}
+      DB_USERNAME: username
+      MYSQL_PASSWORD: password
+      MYSQL_DB: 3306
       MYSQL_ROOT_PASSWORD: password
     depends_on:
       - database
