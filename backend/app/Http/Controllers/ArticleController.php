@@ -146,12 +146,12 @@ class ArticleController extends Controller
      */
     public function searchWithNewsAPI(Request $request)
     {
-        list($keyword, $perPage, $currentPage, $beginDate) = $this->getRequestInputs($request);
+        list($keyword, $perPage, $currentPage, $fromDate) = $this->getRequestInputs($request);
         $api = new NewsAPIService();
-        $response = $api->searchArticles($keyword, $beginDate);
+        $response = $api->searchArticles($keyword, $fromDate);
 
-        $articles = $response->data['results'];
-        $paginateArticles = $this->paginateArticles($articles, $perPage, $currentPage, $beginDate);
+        $articles = $response->data['articles'];
+        $paginateArticles = $this->paginateArticles($articles, $perPage, $currentPage, $fromDate);
         return $paginateArticles;
     }
 

@@ -44,8 +44,8 @@ return [
     ],
 
     'newsapi' => [
-        'base_url' => ' http://eventregistry.org/api/v1/article/getArticles',
-        'key' => env('NEWSAPI_API_KEY', 'e97acc1c-568b-479d-9e80-64d5617f4345'),
+        'base_url' => 'https://newsapi.org/v2/everything',
+        'key' => env('NEWSAPI_API_KEY', 'ab6a5f7f8c374418a21364cadbed97b7'),
     ],
 
 ];
