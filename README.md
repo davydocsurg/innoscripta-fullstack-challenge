@@ -25,6 +25,8 @@ This will build and startup the development server for the `frontend` and `backe
 
 ### PUBLIC ROUTES
 
+The following routes DON'T require authentication
+
 #### POST /api/register
 
 Registers a user
@@ -33,9 +35,9 @@ Registers a user
 
 Logs in a user
 
-#### POST /api/login
+### PUBLIC ROUTES
 
-Logs in a user
+The following routes REQUIRE authentication
 
 #### POST /api/articles/search
 
@@ -43,11 +45,11 @@ Search for articles
 
 #### GET /api/user/settings
 
-Fetch User Settings
+Fetch logged in user Settings
 
 #### PATCH /api/user/settings
 
-Update user settings
+Update logged in user settings
 
 ## FRONTEND
 
