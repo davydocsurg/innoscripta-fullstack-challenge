@@ -3,14 +3,14 @@ import { RefObject } from "react";
 import { FormHandles } from "@unform/core";
 import * as Yup from "yup";
 
-import IGridField from "../../../components/Form/FormBuilder/types/IGridField";
-import ISelectProps from "../../../components/Form/Select/ISelectProps";
+import CustomGridFields from "../../components/Form/FormBuilder/types/CustomGridFields";
+import ISelectProps from "../../components/Form/Select/ISelectProps";
 
-import Toast from "../../../utils/toast/Toast";
+import Toast from "../../utils/toast/Toast";
 
-import getValidationsErrors from "../../../utils/getValidationErrors";
+import getValidationsErrors from "../../utils/getValidationErrors";
 
-import IFormProps from "./IFormProps";
+import FormProps from "./FormProps";
 
 interface IConfig {
     errorMessage?: string;
@@ -19,7 +19,7 @@ interface IConfig {
 }
 
 export default class FormHandler {
-    constructor(ref: RefObject<FormHandles>, props: IFormProps) {
+    constructor(ref: RefObject<FormHandles>, props: FormProps) {
         this.ref = ref;
         this.schema = props.schema;
         this.fields = props.fields;
@@ -27,7 +27,7 @@ export default class FormHandler {
 
     ref: RefObject<FormHandles>;
     schema: Yup.ObjectSchema<any> | undefined;
-    fields: IGridField[] | undefined;
+    fields: CustomGridFields[] | undefined;
 
     async validation(dataValidation: any, config?: IConfig) {
         try {
@@ -80,7 +80,7 @@ export default class FormHandler {
             return "";
         }
 
-        function handleClear(fields: IGridField[] | undefined) {
+        function handleClear(fields: CustomGridFields[] | undefined) {
             let objForm: { [key: string]: never[] | string } = {};
 
             fields?.forEach((field) => {

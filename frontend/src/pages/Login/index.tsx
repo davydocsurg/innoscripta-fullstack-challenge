@@ -10,7 +10,7 @@ import {
 
 // locals
 import logo from "../../assets/logo.svg";
-import { useForm } from "../../commons/hooks/form/useForm";
+import { useForm } from "../../commons/form/useForm";
 import schema from "./validation/schema";
 import Input from "../../components/Form/Input";
 import { FiLock, FiMail } from "react-icons/fi";

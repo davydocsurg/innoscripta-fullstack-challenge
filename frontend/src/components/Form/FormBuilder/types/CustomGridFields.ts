@@ -11,6 +11,6 @@ import IGridSizes from "./IGridSizes";
  * @see CustomInputProps
  * @see IGridSizes
  */
-type IGridField = IGridSizes & (ISelectProps | CustomInputProps);
+type CustomGridFields = IGridSizes & (ISelectProps | CustomInputProps);
 
-export default IGridField;
+export default CustomGridFields;

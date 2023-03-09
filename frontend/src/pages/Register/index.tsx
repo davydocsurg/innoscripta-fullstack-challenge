@@ -5,7 +5,7 @@ import logo from "../../assets/logo.svg";
 import { FiLock, FiMail } from "react-icons/fi";
 import FormBuilder from "../../components/Form/FormBuilder";
 import { Card, CardContent, Typography } from "@mui/material";
-import { useForm } from "../../commons/hooks/form/useForm";
+import { useForm } from "../../commons/form/useForm";
 import schema from "./validation/schema";
 import { Form as FormRig } from "@unform/web";
 import {

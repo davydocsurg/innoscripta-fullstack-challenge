@@ -8,7 +8,7 @@ const api = axios.create({
 // request interceptor
 api.interceptors.request.use((request) => {
     // check if token exists
-    const token = JSON.parse(localStorage.getItem(authToken)!);
+    const token = localStorage.getItem(authToken);
 
     if (token) {
         // set token to request header

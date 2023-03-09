@@ -58,6 +58,8 @@ export const authToken = "auth-token";
 export const authUser = "auth-user";
 
 export const API_BASE_URL = "http://localhost:8000/api/";
+export const DESCRIPTION_CHARACTERS_LIMIT = 200;
+export const ARTICLE_DATE_FORMAT = "MMMM Do YYYY, h:mm:ss a";
 export {
     BAD_REQUEST,
     UNAUTHORIZED,

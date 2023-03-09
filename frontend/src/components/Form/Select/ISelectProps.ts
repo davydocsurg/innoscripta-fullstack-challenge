@@ -15,6 +15,7 @@ type ISelectProps = {
     label: string;
     readOnly?: boolean;
     maxOptionsLimit?: number;
+    fieldDescription?: string;
 
     options: IOption[];
 } & TextFieldProps &

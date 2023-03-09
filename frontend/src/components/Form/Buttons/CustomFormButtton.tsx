@@ -3,6 +3,7 @@ import { LoadingButton } from "@mui/lab";
 import { ButtonProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
+import { IconType } from "react-icons";
 
 type CBProps = {
     title: React.ReactNode;

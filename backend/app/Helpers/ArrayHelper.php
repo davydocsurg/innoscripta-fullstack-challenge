@@ -15,7 +15,7 @@ class ArrayHelper
      *
      * @return mixed The value for the specified key in the input array, or the default value if the key does not exist.
      */
-    public function getArrayValue(array $array, string $key, $default = null)
+    public static function getArrayValue(array $array, string $key, $default = null)
     {
         // Check if the specified key exists in the input array, and retrieve its value if it does.
         // If the key does not exist, set the value to a new DefaultArray object.
