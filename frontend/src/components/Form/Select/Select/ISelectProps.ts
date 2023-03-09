@@ -1,12 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import { TextFieldProps } from '@mui/material';
-import { IconBaseProps } from 'react-icons';
+import { TextFieldProps } from "@mui/material";
+import { IconBaseProps } from "react-icons";
 
-import IFieldsSharedProps from '../IFieldsSharedProps';
+import IOption from "./IOption";
+import SharedProps from "../../SharedProps";
 
-import IOption from './IOption';
-  
 type ISelectProps = {
     icon?: React.ComponentType<IconBaseProps>;
     multiple?: boolean;
@@ -17,6 +16,7 @@ type ISelectProps = {
     maxOptionsLimit?: number;
 
     options: IOption[];
-} & TextFieldProps & IFieldsSharedProps;
+} & TextFieldProps &
+    SharedProps;
 
 export default ISelectProps;

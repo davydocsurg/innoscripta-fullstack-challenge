@@ -7,18 +7,11 @@ import CustomGridFields from "../../../components/Form/FormBuilder/types/CustomG
 
 import { useForm } from "../../../commons/form/useForm";
 import { useUserSettings } from "../../../contexts/settings";
-import { Toast } from "../../../utils/toast";
 
-import {
-    Body,
-    Button,
-    CloseButton,
-    ModalBackground,
-    ModalContainer,
-    TitleCustomize,
-} from "./styles";
+import { Body, CloseButton, ModalBackground, ModalContainer } from "./styles";
 import { Typography } from "@mui/material";
 import { CustomFormButton } from "../../../components/Form/Buttons";
+import { Option } from "../../../types";
 
 type ModalProps = {
     isOpen: boolean;
@@ -36,9 +29,9 @@ const UserSettingsModal: React.FC<ModalProps> = memo(
         const form = useForm();
         const { userSettings, saveSettings } = useUserSettings();
 
-        const [authors, setAuthors] = useState<string[]>([]);
-        const [categories, setCategories] = useState<string[]>([]);
-        const [sources, setSources] = useState<string[]>([]);
+        const [authors, setAuthors] = useState<Option[]>([]);
+        const [categories, setCategories] = useState<Option[]>([]);
+        const [sources, setSources] = useState<Option[]>([]);
 
         function closeModal() {
             setIsOpen(false);
@@ -68,10 +61,6 @@ const UserSettingsModal: React.FC<ModalProps> = memo(
             },
             [form]
         );
-
-        useEffect(() => {
-            setSources(["nytimes", "guardian", "newsapi"]);
-        }, []);
 
         const fields: CustomGridFields[] = [
             {
