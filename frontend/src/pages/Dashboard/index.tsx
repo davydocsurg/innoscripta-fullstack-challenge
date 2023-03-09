@@ -93,7 +93,6 @@ const Dashboard: React.FC = () => {
                 toast.dismiss();
                 toast.loading("Fetching articles...");
 
-                console.log(res.data);
                 if (source === "nytimes") {
                     setNytimesArticles(res.data.articles.data);
                     setCurrentPage(res.data.articles.current_page);
@@ -102,14 +101,14 @@ const Dashboard: React.FC = () => {
 
                 if (source === "guardian") {
                     setGuardianArticles(res.data.articles.data);
-                    setCurrentPage(res.data.current_page);
-                    setLastPage(res.data.last_page);
+                    setCurrentPage(res.data.articles.current_page);
+                    setLastPage(res.data.articles.last_page);
                 }
 
                 if (source === "newsapi") {
                     setNewsAPIArticles(res.data.articles.data);
-                    setCurrentPage(res.data.current_page);
-                    setLastPage(res.data.last_page);
+                    setCurrentPage(res.data.articles.current_page);
+                    setLastPage(res.data.articles.last_page);
                 }
 
                 toast.dismiss();
@@ -168,7 +167,7 @@ const Dashboard: React.FC = () => {
                 ))}
 
                 {newsAPIArticles.map((newsapi, index) => (
-                    <NewsAPIArticle key={newsapi.id} newsapi={newsapi} />
+                    <NewsAPIArticle key={newsapi.title} newsapi={newsapi} />
                 ))}
             </ArticlesList>
             {nytimesArticles.length > 0 && (
@@ -192,7 +191,6 @@ const Dashboard: React.FC = () => {
             {newsAPIArticles.length > 0 && (
                 <Pagination
                     count={lastPage}
-                    page={currentPage}
                     onChange={handlePagination}
                     color="standard"
                 />
