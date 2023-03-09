@@ -19,13 +19,15 @@ Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'
 // login a user
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 
-// search for articles
-Route::post('articles/search', [App\Http\Controllers\ArticleController::class, 'search']);
-
 // users can only access these routes if they are authenticated
-Route::prefix('user')->middleware('auth:api')->group(function () {
-    // update settings and preferences
-    Route::patch('/settings', [App\Http\Controllers\UserSettingController::class, 'updateUserSettings']);
-    // get settings and preferences
-    Route::get('/settings', [App\Http\Controllers\UserSettingController::class, 'getUserSettings']);
+Route::group(['middleware' => 'auth:api'], function () {
+    // search for articles
+    Route::post('articles/search', [App\Http\Controllers\ArticleController::class, 'search']);
+
+    Route::prefix('user')->group(function () {
+        // update settings and preferences
+        Route::patch('/settings', [App\Http\Controllers\UserSettingController::class, 'updateUserSettings']);
+        // get settings and preferences
+        Route::get('/settings', [App\Http\Controllers\UserSettingController::class, 'getUserSettings']);
+    });
 });
