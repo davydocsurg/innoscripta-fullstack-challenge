@@ -10,10 +10,12 @@ import { useForm } from "../../commons/form/useForm";
 import FormBuilder from "../../components/Form/FormBuilder";
 import { CustomFormButton } from "../../components/Form/Buttons";
 import articleSearchFields from "./searchFields";
-import SearchFields from "./types";
 import { Toast } from "../../utils/toast";
 import { api, endPoints } from "../../services";
 import { useAuth } from "../../contexts";
+
+// types
+import type { SearchFields } from "../../types";
 
 const Dashboard: React.FC = () => {
     const form = useForm();
@@ -23,6 +25,9 @@ const Dashboard: React.FC = () => {
     const [searchFields, setSearchFields] = useState<SearchFields>(
         {} as SearchFields
     );
+    // nytimes articles
+    const [nytimesArticles, setNytimesArticles] = useState<any[]>([]);
+
     const handleSearchSubmit = useCallback(
         async ({
             keyword,
