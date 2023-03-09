@@ -46,10 +46,8 @@ const NewsAPIArticle: React.FC<NewsAPIProps> = ({ newsapi, ...rest }) => {
                         <div>
                             <a href="##">
                                 <AuthorInfo>
-                                    {capitalizeFirstLetter(
-                                        newsapi.section_name ?? "Source "
-                                    )}
-                                    - {newsapi.name}
+                                    {capitalizeFirstLetter("Source ")}-{" "}
+                                    {newsapi.source.name}
                                     <br />
                                     <AuthorName>
                                         {newsapi.author ?? "Unknown"}
