@@ -1,6 +1,5 @@
-import React, { ButtonHTMLAttributes, useCallback } from "react";
+import React from "react";
 import { IoArrowRedo } from "react-icons/io5";
-import moment from "moment";
 
 import {
     Author,
@@ -12,38 +11,23 @@ import {
     Content,
     Footer,
     ImgBox,
-    PublishDate,
+    PublishedDate,
     SeeMore,
     Text,
     Title,
 } from "./styles";
 import generic from "../../assets/article-image.png";
-import { DESCRIPTION_CHARACTERS_LIMIT } from "../../constants";
+import {
+    capitalizeFirstLetter,
+    fixDescriptionSize,
+    formatPublishedDate,
+} from "./helpers";
 
 type NYTimesProps = {
     nytArticle: any;
 };
 
 const NYTimesArticle: React.FC<NYTimesProps> = ({ nytArticle, ...rest }) => {
-    const firstLetterUppercase = useCallback((str: string) => {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    }, []);
-
-    const fixingSizeDescription = useCallback(
-        (description: string) => {
-            if (description.length <= DESCRIPTION_CHARACTERS_LIMIT) {
-                return description;
-            }
-
-            let reduced = description.slice(0, DESCRIPTION_CHARACTERS_LIMIT);
-            let lastOccurrence = reduced.lastIndexOf(" ");
-            let result = reduced.substring(0, lastOccurrence);
-
-            return result + "...";
-        },
-        [DESCRIPTION_CHARACTERS_LIMIT]
-    );
-
     return (
         <Container>
             <ImgBox>
@@ -55,14 +39,14 @@ const NYTimesArticle: React.FC<NYTimesProps> = ({ nytArticle, ...rest }) => {
                 <a href="##">
                     <Title>{nytArticle.headline.main}</Title>
                 </a>
-                <Text>{fixingSizeDescription(nytArticle.abstract)}</Text>
+                <Text>{fixDescriptionSize(nytArticle.abstract)}</Text>
 
                 <Footer>
                     <Author>
                         <div>
                             <a href="##">
                                 <AuthorInfo>
-                                    {firstLetterUppercase(
+                                    {capitalizeFirstLetter(
                                         nytArticle.section_name ?? ""
                                     )}
                                     - {nytArticle.source}
@@ -74,11 +58,11 @@ const NYTimesArticle: React.FC<NYTimesProps> = ({ nytArticle, ...rest }) => {
                                 </AuthorInfo>
                             </a>
 
-                            <PublishDate>
-                                {moment(nytArticle.pub_date).format(
-                                    "MMMM Do YYYY, h:mm:ss a"
-                                ) ?? "Unknown"}
-                            </PublishDate>
+                            <PublishedDate>
+                                {nytArticle.pub_date
+                                    ? formatPublishedDate(nytArticle.pub_date)!
+                                    : "Unknown"}
+                            </PublishedDate>
                         </div>
                     </Author>
                     <SeeMore>

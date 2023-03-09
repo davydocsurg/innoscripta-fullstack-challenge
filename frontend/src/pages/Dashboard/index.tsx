@@ -16,7 +16,7 @@ import { useAuth } from "../../contexts";
 
 // types
 import type { SearchFields } from "../../types";
-import { NYTimesArticle } from "../../components/Article";
+import { NYTimesArticle, TheGuardianArticle } from "../../components/Article";
 
 const Dashboard: React.FC = () => {
     const form = useForm();
@@ -28,6 +28,8 @@ const Dashboard: React.FC = () => {
     );
     // nytimes articles
     const [nytimesArticles, setNytimesArticles] = useState<any[]>([]);
+    // guardian articles
+    const [guardianArticles, setGuardianArticles] = useState<any[]>([]);
 
     const handleSearchSubmit = useCallback(
         async ({
@@ -94,6 +96,13 @@ const Dashboard: React.FC = () => {
                     setCurrentPage(res.data.current_page);
                     setLastPage(res.data.last_page);
                 }
+
+                if (source === "guardian") {
+                    setGuardianArticles(res.data.articles.data);
+                    setCurrentPage(res.data.current_page);
+                    setLastPage(res.data.last_page);
+                }
+
                 toast.dismiss();
 
                 toast.success("Articles fetched successfully", {
@@ -132,6 +141,12 @@ const Dashboard: React.FC = () => {
                     <NYTimesArticle
                         key={nytArticle._id}
                         nytArticle={nytArticle}
+                    />
+                ))}
+                {guardianArticles.map((guardianArticle, index) => (
+                    <TheGuardianArticle
+                        key={guardianArticle.id}
+                        guardianArticle={guardianArticle}
                     />
                 ))}
             </ArticlesList>
