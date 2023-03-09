@@ -1,3 +1,4 @@
 import SearchFields from "./SearchFields";
+import Option from "./Option";
 
-export type { SearchFields };
+export type { SearchFields, Option };

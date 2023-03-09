@@ -9,6 +9,7 @@ import { errorColor } from "../../../../styles/variables";
 
 import ISelectProps from "./ISelectProps";
 import { ChipBox, SelectComponent } from "./styles";
+import { Option } from "../../../../types";
 
 const Select: React.FC<ISelectProps> = ({
     name,
@@ -100,7 +101,8 @@ const Select: React.FC<ISelectProps> = ({
     const renderLabelsOptions = useCallback(
         (selected: string[]) => {
             return selected.map((value: string) => {
-                return options.find((opt) => opt.value === value)?.label;
+                return options.find((opt: Option) => opt.value === value)
+                    ?.label;
             });
         },
         [options]
@@ -208,7 +210,7 @@ const Select: React.FC<ISelectProps> = ({
                     <em>{placeholder}</em>
                 </MenuItem>
             )}
-            {options.map((option, index) => (
+            {options.map(({ option, index }: any) => (
                 <MenuItem
                     key={index}
                     value={option.value}

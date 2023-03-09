@@ -1,26 +1,26 @@
-import IOption from "../IOption";
+import { Option } from "../../../../types";
 
 /**
- * Function to convert array of objects or array of strings to array of IOption
- * 
+ * Function to convert array of objects or array of strings to array of Option
+ *
  * @param array - array of objects or array of strings
  * @param value - key of object
  * @param label - label of object
  * @param defaultValue - default value
- * @returns 
+ * @returns
  */
 export function convertToSelect(
-    array: any[] = [], 
-    value?: string|undefined, 
-    label?: string|undefined, 
+    array: any[] = [],
+    value?: string | undefined,
+    label?: string | undefined,
     defaultValue?: any
-): IOption[] {
-    let options: IOption[] = [];
-    
+): Option[] {
+    let options: Option[] = [];
+
     if (!value || !label) {
-        options = array.map((el, ind) => ({ 
-            value: String(ind), 
-            label: el
+        options = array.map((el, ind) => ({
+            value: String(ind),
+            label: el,
         }));
     }
 
@@ -28,15 +28,15 @@ export function convertToSelect(
         options = array.map((item: any) => {
             return {
                 value: item[value],
-                label: item[label]
-            }
+                label: item[label],
+            };
         });
     }
 
     if (defaultValue) {
         options.unshift({
             value: defaultValue,
-            label: defaultValue
+            label: defaultValue,
         });
     }
 
