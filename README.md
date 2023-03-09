@@ -56,5 +56,10 @@ Update logged in user settings
 The frontend runs at port `3000` and has 3 pages:
 
 -   login: http://localhost:3000/
+    ![LOG IN PAGE](./frontend/src/assets/login.png)
+
 -   register: http://localhost:3000/register
+    ![LOG IN PAGE](./frontend/src/assets/register.png)
+
 -   dashboard: http://localhost:3000/dashboard
+    ![LOG IN PAGE](./frontend/src/assets/dashboard.png)
