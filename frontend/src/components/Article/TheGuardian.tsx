@@ -1,6 +1,7 @@
 import React, { ButtonHTMLAttributes, useCallback } from "react";
+
+import generic from "../../assets/article-image.png";
 import { IoArrowRedo } from "react-icons/io5";
-import moment from "moment";
 
 import {
     Author,
@@ -17,14 +18,16 @@ import {
     Text,
     Title,
 } from "./styles";
-import generic from "../../assets/article-image.png";
 import { DESCRIPTION_CHARACTERS_LIMIT } from "../../constants";
 
 type NYTimesProps = {
-    nytArticle: any;
+    guardianArticle: any;
 };
 
-const NYTimesArticle: React.FC<NYTimesProps> = ({ nytArticle, ...rest }) => {
+const TheGuardianArticle: React.FC<NYTimesProps> = ({
+    guardianArticle,
+    ...rest
+}) => {
     const firstLetterUppercase = useCallback((str: string) => {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }, []);
@@ -47,15 +50,13 @@ const NYTimesArticle: React.FC<NYTimesProps> = ({ nytArticle, ...rest }) => {
     return (
         <Container>
             <ImgBox>
-                {/* check if the image path is correct otherwise, use the default */}
-                <Banner src={generic} />
-                {/* nytArticle.multimedia[0].url ?? */}
+                <Banner src={guardianArticle.multimedia[0].url ?? generic} />
             </ImgBox>
             <Content>
                 <a href="##">
-                    <Title>{nytArticle.headline.main}</Title>
+                    <Title>{guardianArticle.headline.main}</Title>
                 </a>
-                <Text>{fixingSizeDescription(nytArticle.abstract)}</Text>
+                <Text>{fixingSizeDescription(guardianArticle.abstract)}</Text>
 
                 <Footer>
                     <Author>
@@ -63,28 +64,26 @@ const NYTimesArticle: React.FC<NYTimesProps> = ({ nytArticle, ...rest }) => {
                             <a href="##">
                                 <AuthorInfo>
                                     {firstLetterUppercase(
-                                        nytArticle.section_name ?? ""
+                                        guardianArticle.section_name ?? ""
                                     )}
-                                    - {nytArticle.source}
+                                    - {guardianArticle.source}
                                     <br />
                                     <AuthorName>
-                                        {nytArticle.byline.original ??
+                                        {guardianArticle.byline.original ??
                                             "Unknown"}
                                     </AuthorName>
                                 </AuthorInfo>
                             </a>
 
                             <PublishDate>
-                                {moment(nytArticle.pub_date).format(
-                                    "MMMM Do YYYY, h:mm:ss a"
-                                ) ?? "Unknown"}
+                                {guardianArticle.published_at ?? "Unknown"}
                             </PublishDate>
                         </div>
                     </Author>
                     <SeeMore>
                         <ButtonSeeMore
                             target="_blank"
-                            href={nytArticle.web_url ?? "#"}
+                            href={guardianArticle.web_url ?? "#"}
                         >
                             <IoArrowRedo />
                         </ButtonSeeMore>
@@ -95,4 +94,4 @@ const NYTimesArticle: React.FC<NYTimesProps> = ({ nytArticle, ...rest }) => {
     );
 };
 
-export default NYTimesArticle;
+export default TheGuardianArticle;

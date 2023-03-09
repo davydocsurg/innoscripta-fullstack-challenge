@@ -85,6 +85,8 @@ const Dashboard: React.FC = () => {
                     per_page,
                     tag,
                 });
+                toast.dismiss();
+                toast.loading("Fetching articles...");
 
                 console.log(res.data);
                 if (source === "nytimes") {
@@ -92,10 +94,14 @@ const Dashboard: React.FC = () => {
                     setCurrentPage(res.data.current_page);
                     setLastPage(res.data.last_page);
                 }
+                toast.dismiss();
+
+                toast.success("Articles fetched successfully", {
+                    autoClose: 2000,
+                });
             } catch (error: any) {
                 console.error(error);
-                toast.dismiss();
-                // toast.error(error.message);
+                toast.error("Something went wrong. Please try again later.");
             }
             setLoading(false);
         },
