@@ -11,9 +11,13 @@ import FormBuilder from "../../components/Form/FormBuilder";
 import { CustomFormButton } from "../../components/Form/Buttons";
 import articleSearchFields from "./searchFields";
 import SearchFields from "./types";
+import { Toast } from "../../utils/toast";
+import { api, endPoints } from "../../services";
+import { useAuth } from "../../contexts";
 
 const Dashboard: React.FC = () => {
     const form = useForm();
+    const { loading, setLoading } = useAuth();
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [lastPage, setLastPage] = useState<number>(1);
     const [searchFields, setSearchFields] = useState<SearchFields>(
@@ -29,6 +33,8 @@ const Dashboard: React.FC = () => {
             per_page,
             tag,
         }: SearchFields) => {
+            setLoading(true);
+
             setSearchFields({
                 keyword: keyword,
                 source: source,
@@ -38,17 +44,56 @@ const Dashboard: React.FC = () => {
                 per_page: per_page || 5,
                 current_page: current_page || 1,
             });
+
+            await triggerSearch({
+                keyword,
+                source,
+                current_page,
+                end_date,
+                from_date,
+                per_page,
+                tag,
+            });
         },
         [form]
     );
 
-    const triggerSearch = useCallback(() => {
-        console.log(searchFields);
-    }, [searchFields]);
+    const triggerSearch = useCallback(
+        async ({
+            keyword,
+            source,
+            current_page,
+            end_date,
+            from_date,
+            per_page,
+            tag,
+        }: SearchFields) => {
+            let toast = new Toast().loading("Processing articles...");
+            try {
+                const res = await api.post(endPoints.searchArticles, {
+                    keyword,
+                    source,
+                    from_date,
+                    current_page,
+                    end_date,
+                    per_page,
+                    tag,
+                });
 
-    useEffect(() => {
-        triggerSearch();
-    }, [searchFields]);
+                console.log(res.data);
+            } catch (error: any) {
+                console.error(error);
+
+                // toast.error(error.message);
+            }
+            setLoading(false);
+        },
+        [searchFields]
+    );
+
+    // useEffect(() => {
+    //     triggerSearch();
+    // }, [searchFields, loading]);
 
     return (
         <MainDefault>

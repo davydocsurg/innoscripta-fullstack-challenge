@@ -166,9 +166,10 @@ class ArticleController extends Controller
         $keyword = $inputs['keyword'];
         $perPage = $inputs['per_page'] ?? 5;
         $currentPage = $inputs['current_page'] ?? 1;
-        $beginDate = $inputs['begin_date'] ?? null;
         $endDate = $inputs['end_date'] ?? null;
         $fromDate = $inputs['from_date'] ?? null;
+        // format in Ymd
+        $beginDate = $fromDate ? date('Ymd', strtotime($fromDate)) : null;
         $tag = $inputs['tag'] ?? null;
 
         return [$keyword, $perPage, $currentPage, $beginDate, $endDate, $fromDate, $tag];

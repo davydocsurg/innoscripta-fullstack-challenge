@@ -2,6 +2,7 @@ export const endPoints = {
     login: "/login",
     register: "/register",
     logout: "/logout",
+    searchArticles: "/articles/search",
 };
 
 export const navUrl = {
