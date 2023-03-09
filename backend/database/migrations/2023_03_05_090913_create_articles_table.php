@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('author')->nullable();
             $table->string('category')->nullable();
             $table->string('source')->nullable();
-            $table->string('image', 400)->nullable();
+            $table->string('image', 600)->nullable();
             $table->dateTime('published_at', $precision = 0)->nullable();
             $table->timestamps();
         });
