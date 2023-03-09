@@ -83,7 +83,7 @@ export const UserSettingsProvider: React.FC<PropsWithChildren<{}>> = ({
     );
 };
 
-export function useSettings(): UserSettingsContextData {
+export function useUserSettings(): UserSettingsContextData {
     const context = useContext(UserSettingsContext);
 
     return context;

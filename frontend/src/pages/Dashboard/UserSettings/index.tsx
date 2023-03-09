@@ -6,11 +6,11 @@ import FormBuilder from "../../../components/Form/FormBuilder";
 import CustomGridFields from "../../../components/Form/FormBuilder/types/CustomGridFields";
 import IOption from "../../../components/Form/Select/IOption";
 
-import { useForm } from "hooks/form/useForm";
-import { useSettings } from "hooks/settings";
-import Toast from "hooks/toast/Toast";
+import { useForm } from "../../../commons/form/useForm";
+import { useUserSettings } from "../../../contexts/settings";
+import { Toast } from "../../../utils/toast";
 
-import api from "services/api";
+import api from "../../../services/api";
 
 import {
     Body,
@@ -21,20 +21,20 @@ import {
     TitleCustomize,
 } from "./styles";
 
-interface IProps {
+type ModalProps = {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
-}
+};
 
 interface IModalFormData {
-    fav_authors: string[];
-    fav_categories: string[];
-    fav_sources: string[];
+    favorite_authors: string[];
+    favorite_categories: string[];
+    favorite_sources: string[];
 }
 
-const ModalCustomize: React.FC<IProps> = memo(({ isOpen, setIsOpen }) => {
+const ModalCustomize: React.FC<ModalProps> = memo(({ isOpen, setIsOpen }) => {
     const form = useForm();
-    const { settings, saveSettings } = useSettings();
+    const { userSettings, saveSettings } = useUserSettings();
 
     const [authors, setAuthors] = useState<IOption[]>([]);
     const [categories, setCategories] = useState<IOption[]>([]);
@@ -54,14 +54,14 @@ const ModalCustomize: React.FC<IProps> = memo(({ isOpen, setIsOpen }) => {
 
     const handleSubmit = useCallback(
         async ({
-            fav_authors,
-            fav_categories,
-            fav_sources,
+            favorite_authors,
+            favorite_categories,
+            favorite_sources,
         }: IModalFormData) => {
             await saveSettings({
-                fav_authors,
-                fav_categories,
-                fav_sources,
+                favorite_authors,
+                favorite_categories,
+                favorite_sources,
             });
 
             setIsOpen(false);
@@ -69,52 +69,13 @@ const ModalCustomize: React.FC<IProps> = memo(({ isOpen, setIsOpen }) => {
         [form]
     );
 
-    useEffect(() => {
-        Promise.all([
-            api.get("/articles/authors").then(({ data }) => {
-                setAuthors(
-                    data.data.map((author: string) => ({
-                        value: author,
-                        label: author,
-                    }))
-                );
-            }),
-
-            api.get("/articles/categories").then(({ data }) => {
-                setCategories(
-                    data.data.map((category: string) => ({
-                        value: category,
-                        label: category,
-                    }))
-                );
-            }),
-
-            api.get("/articles/sources").then(({ data }) => {
-                setSources(
-                    data.data.map((author: string) => ({
-                        value: author,
-                        label: author,
-                    }))
-                );
-            }),
-        ])
-            .then(() => {
-                form.setData(settings);
-            })
-            .catch((error) => {
-                new Toast().error(
-                    "Error loading page information! Contact the Support"
-                );
-            });
-    }, []);
-
     const fields: CustomGridFields[] = [
         {
             gridSize: {
                 sm: 12,
             },
             type: "select",
-            name: "fav_authors",
+            name: "favorite_authors",
             label: "Favorite Authors",
             options: authors,
             multiple: true,
@@ -127,7 +88,7 @@ const ModalCustomize: React.FC<IProps> = memo(({ isOpen, setIsOpen }) => {
                 sm: 12,
             },
             type: "select",
-            name: "fav_categories",
+            name: "favorite_categories",
             label: "Favorite Categories",
             options: categories,
             multiple: true,
@@ -140,7 +101,7 @@ const ModalCustomize: React.FC<IProps> = memo(({ isOpen, setIsOpen }) => {
                 sm: 12,
             },
             type: "select",
-            name: "fav_sources",
+            name: "favorite_sources",
             label: "Favorite Sources",
             options: sources,
             multiple: true,

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Card, Pagination } from "@mui/material";
+import { Pagination } from "@mui/material";
 import { Form as FormRig } from "@unform/web";
-import CiSearch from "react-icons/ci";
 
 // locals
 import { MainDefault } from "../../styles/styled-components";
