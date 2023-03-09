@@ -6,7 +6,7 @@ import {
     useState,
 } from "react";
 import { api, endPoints } from "../services";
-import { userSettings } from "../constants";
+import { userSettingsStore } from "../constants";
 
 type UserSettingsState = {
     favorite_authors: string[];
@@ -29,9 +29,7 @@ export const UserSettingsProvider: React.FC<PropsWithChildren<{}>> = ({
     children,
 }) => {
     const [userSettings, setUserSettings] = useState<UserSettingsState>(() => {
-        const settings = localStorage.getItem(
-            userSettings as unknown as string
-        );
+        const settings = localStorage.getItem(userSettingsStore);
 
         if (settings) {
             return JSON.parse(settings);
@@ -41,10 +39,7 @@ export const UserSettingsProvider: React.FC<PropsWithChildren<{}>> = ({
     });
 
     const saveSettings = useCallback(async (settings: UserSettingsState) => {
-        localStorage.setItem(
-            userSettings as unknown as string,
-            JSON.stringify(settings)
-        );
+        localStorage.setItem(userSettingsStore, JSON.stringify(settings));
         setUserSettings(settings);
     }, []);
 

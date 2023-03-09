@@ -17,6 +17,7 @@ import { useAuth } from "../../contexts";
 import type { SearchFields } from "../../types";
 import { NYTimesArticle, TheGuardianArticle } from "../../components/Article";
 import NewsAPIArticle from "../../components/Article/NewsAPI";
+import UserSettingsModal from "./UserSettingsModal";
 
 const Dashboard: React.FC = () => {
     const form = useForm();
@@ -32,6 +33,7 @@ const Dashboard: React.FC = () => {
     const [guardianArticles, setGuardianArticles] = useState<any[]>([]);
     // newsapi articles
     const [newsAPIArticles, setNewsAPIArticles] = useState<any[]>([]);
+    const [showUserSettingsModal, setShowUserSettingsModal] = useState(false);
 
     const handleSearchSubmit = useCallback(
         async ({
@@ -194,6 +196,11 @@ const Dashboard: React.FC = () => {
                     color="standard"
                 />
             )}
+
+            <UserSettingsModal
+                isOpen={showUserSettingsModal}
+                setIsOpen={() => setShowUserSettingsModal(false)}
+            />
         </MainDefault>
     );
 };
