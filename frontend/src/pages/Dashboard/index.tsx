@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Card, Pagination } from "@mui/material";
+import { Pagination } from "@mui/material";
 import { Form as FormRig } from "@unform/web";
-import CiSearch from "react-icons/ci";
 
 // locals
 import { MainDefault } from "../../styles/styled-components";
@@ -18,6 +17,7 @@ import { useAuth } from "../../contexts";
 import type { SearchFields } from "../../types";
 import { NYTimesArticle, TheGuardianArticle } from "../../components/Article";
 import NewsAPIArticle from "../../components/Article/NewsAPI";
+import UserSettingsModal from "./UserSettingsModal";
 
 const Dashboard: React.FC = () => {
     const form = useForm();
@@ -33,6 +33,7 @@ const Dashboard: React.FC = () => {
     const [guardianArticles, setGuardianArticles] = useState<any[]>([]);
     // newsapi articles
     const [newsAPIArticles, setNewsAPIArticles] = useState<any[]>([]);
+    const [showUserSettingsModal, setShowUserSettingsModal] = useState(false);
 
     const handleSearchSubmit = useCallback(
         async ({
@@ -150,6 +151,12 @@ const Dashboard: React.FC = () => {
                         sx={{ mt: 2 }}
                     />
                 </FormRig>
+
+                <CustomFormButton
+                    title="Update Settings"
+                    sx={{ mt: 2 }}
+                    onClick={() => setShowUserSettingsModal(true)}
+                />
             </Filters>
 
             <ArticlesList>
@@ -170,6 +177,7 @@ const Dashboard: React.FC = () => {
                     <NewsAPIArticle key={newsapi.title} newsapi={newsapi} />
                 ))}
             </ArticlesList>
+
             {nytimesArticles.length > 0 && (
                 <Pagination
                     count={lastPage}
@@ -195,6 +203,11 @@ const Dashboard: React.FC = () => {
                     color="standard"
                 />
             )}
+
+            <UserSettingsModal
+                isOpen={showUserSettingsModal}
+                setIsOpen={() => setShowUserSettingsModal(false)}
+            />
         </MainDefault>
     );
 };

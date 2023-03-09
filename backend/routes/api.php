@@ -19,10 +19,11 @@ Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'
 // login a user
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 
-// articles
-Route::prefix('articles')->middleware('auth:api')->group(function () {
-    // search for articles
-    Route::post('/search', [App\Http\Controllers\ArticleController::class, 'search']);
+// search for articles
+Route::post('articles/search', [App\Http\Controllers\ArticleController::class, 'search']);
+
+// users can only access these routes if they are authenticated
+Route::prefix('user')->middleware('auth:api')->group(function () {
     // update settings and preferences
     Route::patch('/settings', [App\Http\Controllers\UserSettingController::class, 'updateUserSettings']);
     // get settings and preferences

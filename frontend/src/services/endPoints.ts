@@ -3,6 +3,7 @@ export const endPoints = {
     register: "/register",
     logout: "/logout",
     searchArticles: "/articles/search",
+    userSettings: "/user/settings",
 };
 
 export const navUrl = {

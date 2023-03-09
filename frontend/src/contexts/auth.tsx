@@ -48,7 +48,6 @@ export const AuthProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
         const user = localStorage.getItem(authUser);
 
         if (token && user) {
-            // api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             return { token, user: JSON.parse(user) };
         }
 
