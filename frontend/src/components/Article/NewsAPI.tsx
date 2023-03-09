@@ -1,6 +1,4 @@
 import React from "react";
-
-import generic from "../../assets/article-image.png";
 import { IoArrowRedo } from "react-icons/io5";
 
 import {
@@ -18,50 +16,50 @@ import {
     Text,
     Title,
 } from "./styles";
-import { capitalizeFirstLetter, formatPublishedDate } from "./helpers";
+import generic from "../../assets/article-image.png";
+import {
+    capitalizeFirstLetter,
+    fixDescriptionSize,
+    formatPublishedDate,
+} from "./helpers";
 
-type TheGuardianProps = {
-    guardianArticle: any;
+type NewsAPIProps = {
+    newsapi: any;
 };
 
-const TheGuardianArticle: React.FC<TheGuardianProps> = ({
-    guardianArticle,
-    ...rest
-}) => {
+const NewsAPIArticle: React.FC<NewsAPIProps> = ({ newsapi, ...rest }) => {
     return (
         <Container>
             <ImgBox>
-                <Banner src={generic} />
+                {/* check if the image path is correct otherwise, use the default */}
+                <Banner src={newsapi.urlToImage ?? generic} />
+                {/*  */}
             </ImgBox>
             <Content>
                 <a href="##">
-                    <Title>{guardianArticle.webTitle}</Title>
+                    <Title>{newsapi.title}</Title>
                 </a>
-                <Text>
-                    Follow this <a href={guardianArticle.apiUrl}>link</a> to see
-                    the full article on The Guardian
-                </Text>
+                <Text>{fixDescriptionSize(newsapi.description)}</Text>
+
                 <Footer>
                     <Author>
                         <div>
                             <a href="##">
                                 <AuthorInfo>
                                     {capitalizeFirstLetter(
-                                        guardianArticle.sectionName ?? ""
+                                        newsapi.section_name ?? "Source "
                                     )}
+                                    - {newsapi.name}
                                     <br />
                                     <AuthorName>
-                                        {guardianArticle.pillarName ??
-                                            "Unknown"}
+                                        {newsapi.author ?? "Unknown"}
                                     </AuthorName>
                                 </AuthorInfo>
                             </a>
 
                             <PublishedDate>
-                                {guardianArticle.webPublicationDate !== null
-                                    ? formatPublishedDate(
-                                          guardianArticle.webPublicationDate
-                                      )
+                                {newsapi.pub_date
+                                    ? formatPublishedDate(newsapi.publishedAt)!
                                     : "Unknown"}
                             </PublishedDate>
                         </div>
@@ -69,7 +67,7 @@ const TheGuardianArticle: React.FC<TheGuardianProps> = ({
                     <SeeMore>
                         <ButtonSeeMore
                             target="_blank"
-                            href={guardianArticle.webUrl ?? "#"}
+                            href={newsapi.url ?? "#"}
                         >
                             <IoArrowRedo />
                         </ButtonSeeMore>
@@ -80,4 +78,4 @@ const TheGuardianArticle: React.FC<TheGuardianProps> = ({
     );
 };
 
-export default TheGuardianArticle;
+export default NewsAPIArticle;
