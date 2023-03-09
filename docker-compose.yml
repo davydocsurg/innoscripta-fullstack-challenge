@@ -1,6 +1,23 @@
 version: "3"
 
 services:
+# database service
+  database:
+    platform: linux/amd64 # for M1 Macs
+    image: mysql:8.0
+    container_name: innoscripta-database
+    environment:
+      DB_DATABASE: innoscripta
+      DB_USERNAME: username
+      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+    ports:
+      - 3306:3306
+    networks:
+      - innoscripta-network
+    volumes:
+      - ./backend/docker/db:/var/lib/mysql
+
+# backend service
   backend:
     platform: linux/amd64 # for M1 Macs
     build: ./backend
@@ -11,40 +28,30 @@ services:
       - 8000:8000
     volumes:
       - ./backend:/var/www/html
+    environment:
+      DB_DATABASE: innoscripta
+      DB_HOST: innoscripta-db
+      DB_USERNAME: root
+      MYSQL_PASSWORD: ${DB_PASSWORD:-username}
+      MYSQL_DB: ${MYSQL_PORT:-3306}
+      MYSQL_ROOT_PASSWORD: password
     depends_on:
       - database
     networks:
       - innoscripta-network
-    # command: cd backend && php artisan serve --host=localhost --port=8000
 
-  database:
-    platform: linux/amd64 # for M1 Macs
-    image: mysql:8.0
-    container_name: innoscripta-database
-    environment:
-      # DB_DATABASE: innoscripta
-      # DB_USERNAME: root
-      # MYSQL_PASSWORD: ${DB_PASSWORD:-root}
-      # MYSQL_DB: ${MYSQL_PORT:-8889}
-      MYSQL_ROOT_PASSWORD: password
+# frontend service
+  frontend:
+    build: ./frontend
+    image: innoscripta-frontend
+    container_name: innoscripta-frontend
+    restart: always
     ports:
-      - 3306:3306
+      - 3000:3000
     networks:
       - innoscripta-network
-    volumes:
-      - innoscripta-database:/var/lib/mysql
-
-  # frontend:
-  #   build: ./frontend
-  #   image: innoscripta-frontend
-  #   container_name: innoscripta-frontend
-  #   restart: always
-  #   ports:
-  #     - 3000:3000
-  #   networks:
-  #     - innoscripta-network
-  #   depends_on:
-  #     - backend
+    depends_on:
+      - backend
 
 networks:
   innoscripta-network:
