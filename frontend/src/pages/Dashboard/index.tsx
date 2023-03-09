@@ -96,8 +96,8 @@ const Dashboard: React.FC = () => {
                 console.log(res.data);
                 if (source === "nytimes") {
                     setNytimesArticles(res.data.articles.data);
-                    setCurrentPage(res.data.current_page);
-                    setLastPage(res.data.last_page);
+                    setCurrentPage(res.data.articles.current_page);
+                    setLastPage(res.data.articles.last_page);
                 }
 
                 if (source === "guardian") {
@@ -130,7 +130,12 @@ const Dashboard: React.FC = () => {
         event: React.ChangeEvent<unknown>,
         value: number
     ) => {
+        event.preventDefault();
         setCurrentPage(value);
+        triggerSearch({
+            ...searchFields,
+            current_page: value,
+        });
     };
 
     return (
@@ -165,16 +170,33 @@ const Dashboard: React.FC = () => {
                 {newsAPIArticles.map((newsapi, index) => (
                     <NewsAPIArticle key={newsapi.id} newsapi={newsapi} />
                 ))}
-
-                {nytimesArticles.length > 0 && (
-                    <Pagination
-                        count={lastPage}
-                        page={currentPage}
-                        onChange={handlePagination}
-                        color="standard"
-                    />
-                )}
             </ArticlesList>
+            {nytimesArticles.length > 0 && (
+                <Pagination
+                    count={lastPage}
+                    page={currentPage}
+                    onChange={handlePagination}
+                    color="standard"
+                />
+            )}
+
+            {guardianArticles.length > 0 && (
+                <Pagination
+                    count={lastPage}
+                    page={currentPage}
+                    onChange={handlePagination}
+                    color="standard"
+                />
+            )}
+
+            {newsAPIArticles.length > 0 && (
+                <Pagination
+                    count={lastPage}
+                    page={currentPage}
+                    onChange={handlePagination}
+                    color="standard"
+                />
+            )}
         </MainDefault>
     );
 };
