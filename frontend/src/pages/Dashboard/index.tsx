@@ -5,7 +5,7 @@ import CiSearch from "react-icons/ci";
 
 // locals
 import { MainDefault } from "../../styles/styled-components";
-import { Filters } from "./styles";
+import { ArticlesList, Filters } from "./styles";
 import { useForm } from "../../commons/form/useForm";
 import FormBuilder from "../../components/Form/FormBuilder";
 import { CustomFormButton } from "../../components/Form/Buttons";
@@ -16,6 +16,7 @@ import { useAuth } from "../../contexts";
 
 // types
 import type { SearchFields } from "../../types";
+import { NYTimesArticle } from "../../components/Article";
 
 const Dashboard: React.FC = () => {
     const form = useForm();
@@ -86,9 +87,14 @@ const Dashboard: React.FC = () => {
                 });
 
                 console.log(res.data);
+                if (source === "nytimes") {
+                    setNytimesArticles(res.data.articles.data);
+                    setCurrentPage(res.data.current_page);
+                    setLastPage(res.data.last_page);
+                }
             } catch (error: any) {
                 console.error(error);
-
+                toast.dismiss();
                 // toast.error(error.message);
             }
             setLoading(false);
@@ -109,11 +115,20 @@ const Dashboard: React.FC = () => {
                     <CustomFormButton
                         title="Search"
                         type="submit"
-                        loading={false}
+                        loading={loading}
                         sx={{ mt: 2 }}
                     />
                 </FormRig>
             </Filters>
+
+            <ArticlesList>
+                {nytimesArticles.map((nytArticle, index) => (
+                    <NYTimesArticle
+                        key={nytArticle._id}
+                        nytArticle={nytArticle}
+                    />
+                ))}
+            </ArticlesList>
         </MainDefault>
     );
 };

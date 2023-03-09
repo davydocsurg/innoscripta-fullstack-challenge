@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes, useCallback } from "react";
 
-import generic from "assets/logo.svg";
+import generic from "../../assets/logo.svg";
 import { IoArrowRedo } from "react-icons/io5";
 
 import {
@@ -20,11 +20,11 @@ import {
 } from "./styles";
 import { DESCRIPTION_CHARACTERS_LIMIT } from "../../constants";
 
-type IProps = {
-    article: any;
+type NYTimesProps = {
+    nytArticle: any;
 };
 
-const NYTimesArticle: React.FC<IProps> = ({ article, ...rest }) => {
+const NYTimesArticle: React.FC<NYTimesProps> = ({ nytArticle, ...rest }) => {
     const firstLetterUppercase = useCallback((str: string) => {
         return str.charAt(0).toUpperCase() + str.slice(1);
     }, []);
@@ -47,13 +47,13 @@ const NYTimesArticle: React.FC<IProps> = ({ article, ...rest }) => {
     return (
         <Container>
             <ImgBox>
-                <Banner src={article.multimedia[0].url ?? generic} />
+                <Banner src={nytArticle.multimedia[0].url ?? generic} />
             </ImgBox>
             <Content>
                 <a href="##">
-                    <Title>{article.headline.main}</Title>
+                    <Title>{nytArticle.headline.main}</Title>
                 </a>
-                <Text>{fixingSizeDescription(article.abstract)}</Text>
+                <Text>{fixingSizeDescription(nytArticle.abstract)}</Text>
 
                 <Footer>
                     <Author>
@@ -61,25 +61,26 @@ const NYTimesArticle: React.FC<IProps> = ({ article, ...rest }) => {
                             <a href="##">
                                 <AuthorInfo>
                                     {firstLetterUppercase(
-                                        article.section_name ?? ""
+                                        nytArticle.section_name ?? ""
                                     )}
-                                    - {article.source}
+                                    - {nytArticle.source}
                                     <br />
                                     <AuthorName>
-                                        {article.byline.original ?? "Unknown"}
+                                        {nytArticle.byline.original ??
+                                            "Unknown"}
                                     </AuthorName>
                                 </AuthorInfo>
                             </a>
 
                             <PublishDate>
-                                {article.published_at ?? "Unknown"}
+                                {nytArticle.published_at ?? "Unknown"}
                             </PublishDate>
                         </div>
                     </Author>
                     <SeeMore>
                         <ButtonSeeMore
                             target="_blank"
-                            href={article.web_url ?? "#"}
+                            href={nytArticle.web_url ?? "#"}
                         >
                             <IoArrowRedo />
                         </ButtonSeeMore>
