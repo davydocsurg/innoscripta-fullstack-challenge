@@ -151,6 +151,12 @@ const Dashboard: React.FC = () => {
                         sx={{ mt: 2 }}
                     />
                 </FormRig>
+
+                <CustomFormButton
+                    title="Update Settings"
+                    sx={{ mt: 2 }}
+                    onClick={() => setShowUserSettingsModal(true)}
+                />
             </Filters>
 
             <ArticlesList>
@@ -171,6 +177,7 @@ const Dashboard: React.FC = () => {
                     <NewsAPIArticle key={newsapi.title} newsapi={newsapi} />
                 ))}
             </ArticlesList>
+
             {nytimesArticles.length > 0 && (
                 <Pagination
                     count={lastPage}

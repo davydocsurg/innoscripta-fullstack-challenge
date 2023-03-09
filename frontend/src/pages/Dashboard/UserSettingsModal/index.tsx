@@ -20,13 +20,15 @@ import {
     ModalContainer,
     TitleCustomize,
 } from "./styles";
+import { Typography } from "@mui/material";
+import { CustomFormButton } from "../../../components/Form/Buttons";
 
 type ModalProps = {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
 };
 
-interface IModalFormData {
+interface ModalFormData {
     favorite_authors: string[];
     favorite_categories: string[];
     favorite_sources: string[];
@@ -58,7 +60,7 @@ const UserSettingsModal: React.FC<ModalProps> = memo(
                 favorite_authors,
                 favorite_categories,
                 favorite_sources,
-            }: IModalFormData) => {
+            }: ModalFormData) => {
                 await saveSettings({
                     favorite_authors,
                     favorite_categories,
@@ -119,9 +121,9 @@ const UserSettingsModal: React.FC<ModalProps> = memo(
                         <button onClick={closeModal}>X</button>
                     </CloseButton>
                     <Body>
-                        <TitleCustomize variant="h5" color="primary">
-                            CUSTOMIZE YOUR FEED
-                        </TitleCustomize>
+                        <Typography variant="h5" color="primary">
+                            UPDATE YOUR SETTINGS
+                        </Typography>
                         <small>
                             You can select 3 favorite authors, categories and
                             sources to filter your feed.
@@ -134,7 +136,12 @@ const UserSettingsModal: React.FC<ModalProps> = memo(
                             }}
                         >
                             <FormBuilder fields={fields} />
-                            <Button type="submit">SAVE AND FILTER</Button>
+                            <CustomFormButton
+                                type="submit"
+                                variant="contained"
+                                title="Save"
+                                sx={{ mt: 2 }}
+                            />
                         </FormUnform>
                     </Body>
                 </ModalContainer>
