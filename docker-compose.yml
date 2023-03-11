@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
 # database service
@@ -37,6 +37,19 @@ services:
       - innoscripta-network
     depends_on:
       - backend
+
+    # Web Server Service
+  nginx:
+    image: nginx:alpine
+    container_name: innoscripta-webservice
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - backend
+      - database
 
 networks:
   innoscripta-network:
