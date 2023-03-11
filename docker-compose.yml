@@ -15,7 +15,7 @@ services:
 
 # backend service
   backend:
-    container_name: dlr
+    container_name: innoscripta-backend
     build:
       context: ./backend
       dockerfile: Dockerfile
