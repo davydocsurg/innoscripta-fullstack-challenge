@@ -46,10 +46,12 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/var/www
-      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./nginx/backend/conf.d/:/etc/nginx/conf.d/
+      # - ./nginx/frontend/conf.d/:/etc/nginx/conf.d/
     depends_on:
       - backend
       - database
+
 
 networks:
   innoscripta-network:
