@@ -4,6 +4,13 @@ FROM php:8.0-fpm
 # Install required PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql
 
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy the Laravel application to the container
+COPY . .
+COPY .env.example .env
+
 RUN apt-get update
 
 # Install useful tools
@@ -44,3 +51,14 @@ RUN docker-php-ext-install \
     bz2 \
     zip \
     intl
+
+# Install Composer and run it to install dependencies
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install
+RUN php artisan key:generate
+
+# Set file permissions
+RUN chown -R www-data:www-data storage bootstrap/cache
+
+COPY ./exec.sh /tmp
+# ENTRYPOINT ["/tmp/exec.sh"]
