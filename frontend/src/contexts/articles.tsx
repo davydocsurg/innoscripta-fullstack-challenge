@@ -95,7 +95,7 @@ export function useArticleContext(): ArticleContextData {
 
     if (!context) {
         throw new Error(
-            "useArticleContext must be used within an AuthProvider"
+            "useArticleContext must be used within an ArticleProvider"
         );
     }
 

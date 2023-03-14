@@ -11,7 +11,7 @@ import { CustomFormButton } from "../../components/Form/Buttons";
 import articleSearchFields from "./searchFields";
 import { Toast } from "../../utils/toast";
 import { api, endPoints } from "../../services";
-import { useAuth } from "../../contexts";
+import { useArticleContext, useAuth } from "../../contexts";
 
 // types
 import type { SearchFields } from "../../types";
@@ -21,18 +21,22 @@ import UserSettingsModal from "./UserSettingsModal";
 
 const Dashboard: React.FC = () => {
     const form = useForm();
-    const { loading, setLoading } = useAuth();
+    const {
+        loading,
+        setLoading,
+        guardian,
+        newsapi,
+        nytimes,
+        setGuardianArticles,
+        setNYTimesArticles,
+        setNewsAPIArticles,
+    } = useArticleContext();
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [lastPage, setLastPage] = useState<number>(1);
     const [searchFields, setSearchFields] = useState<SearchFields>(
         {} as SearchFields
     );
-    // nytimes articles
-    const [nytimesArticles, setNytimesArticles] = useState<any[]>([]);
-    // guardian articles
-    const [guardianArticles, setGuardianArticles] = useState<any[]>([]);
-    // newsapi articles
-    const [newsAPIArticles, setNewsAPIArticles] = useState<any[]>([]);
+
     const [showUserSettingsModal, setShowUserSettingsModal] = useState(false);
 
     const handleSearchSubmit = useCallback(
@@ -97,25 +101,24 @@ const Dashboard: React.FC = () => {
                 console.log(res.data);
 
                 if (source === "nytimes") {
-                    setNytimesArticles(res.data.articles.data);
+                    setNYTimesArticles(res.data.articles.data);
                     setCurrentPage(res.data.articles.current_page);
                     setLastPage(res.data.articles.last_page);
+                    comparePages(currentPage, res.data.articles.last_page);
                 }
 
                 if (source === "guardian") {
-                    setGuardianArticles([]);
                     setGuardianArticles(res.data.articles.data);
                     setCurrentPage(res.data.articles.current_page);
                     setLastPage(res.data.articles.last_page);
-                    setTimeout(() => {
-                        console.log(guardianArticles, "guardianArticles");
-                    }, 1200);
+                    comparePages(currentPage, res.data.articles.last_page);
                 }
 
                 if (source === "newsapi") {
                     setNewsAPIArticles(res.data.articles.data);
                     setCurrentPage(res.data.articles.current_page);
                     setLastPage(res.data.articles.last_page);
+                    comparePages(currentPage, res.data.articles.last_page);
                 }
 
                 toast.dismiss();
@@ -132,6 +135,12 @@ const Dashboard: React.FC = () => {
         [searchFields]
     );
 
+    const comparePages = (currentPage: number, lastPage: number) => {
+        if (currentPage > lastPage) {
+            setCurrentPage(1);
+        }
+    };
+
     const handlePagination = (
         event: React.ChangeEvent<unknown>,
         value: number
@@ -142,6 +151,7 @@ const Dashboard: React.FC = () => {
             current_page: value,
         });
         setCurrentPage(value);
+        console.log(guardian);
     };
 
     return (
@@ -166,25 +176,25 @@ const Dashboard: React.FC = () => {
             </Filters>
 
             <ArticlesList>
-                {/* {nytimesArticles.map((nytArticle, index) => (
+                {/* {nytimes.map((nytArticle, index) => (
                     <NYTimesArticle
                         key={nytArticle._id}
                         nytArticle={nytArticle}
                     />
                 ))} */}
-                {guardianArticles.map((guardianArticle, index) => (
+                {guardian.map((guardianArticle, index) => (
                     <TheGuardianArticle
                         key={guardianArticle.id}
                         guardianArticle={guardianArticle}
                     />
                 ))}
 
-                {/* {newsAPIArticles.map((newsapi, index) => (
+                {/* {newsapi.map((newsapi, index) => (
                     <NewsAPIArticle key={newsapi.title} newsapi={newsapi} />
                 ))} */}
             </ArticlesList>
 
-            {nytimesArticles.length > 0 && (
+            {nytimes.length > 0 && (
                 <Pagination
                     count={lastPage}
                     page={currentPage}
@@ -193,7 +203,7 @@ const Dashboard: React.FC = () => {
                 />
             )}
 
-            {guardianArticles.length > 0 && (
+            {guardian.length > 0 && (
                 <Pagination
                     count={lastPage}
                     page={currentPage}
@@ -202,7 +212,7 @@ const Dashboard: React.FC = () => {
                 />
             )}
 
-            {newsAPIArticles.length > 0 && (
+            {newsapi.length > 0 && (
                 <Pagination
                     count={lastPage}
                     onChange={handlePagination}

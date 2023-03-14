@@ -1,11 +1,14 @@
 import React, { PropsWithChildren } from "react";
 import { useAuth, AuthProvider } from "./auth";
 import { UserSettingsProvider } from "./settings";
+import { ArticleProvider, useArticleContext } from "./articles";
 
 const AppProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => (
     <AuthProvider>
-        <UserSettingsProvider>{children}</UserSettingsProvider>
+        <UserSettingsProvider>
+            <ArticleProvider>{children}</ArticleProvider>
+        </UserSettingsProvider>
     </AuthProvider>
 );
 
-export { useAuth, AppProvider };
+export { useAuth, useArticleContext, AppProvider };
