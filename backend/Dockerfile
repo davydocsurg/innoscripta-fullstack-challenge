@@ -5,7 +5,7 @@ FROM php:8.0-fpm
 RUN docker-php-ext-install pdo pdo_mysql
 
 # Set working directory
-WORKDIR /var/www/html
+WORKDIR /var/www
 
 # Copy the Laravel application to the container
 COPY . .
@@ -61,4 +61,4 @@ RUN php artisan key:generate
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 COPY ./exec.sh /tmp
-# ENTRYPOINT ["/tmp/exec.sh"]
+ENTRYPOINT ["/tmp/exec.sh"]
