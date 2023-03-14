@@ -94,6 +94,8 @@ const Dashboard: React.FC = () => {
                 toast.dismiss();
                 toast.loading("Fetching articles...");
 
+                console.log(res.data);
+
                 if (source === "nytimes") {
                     setNytimesArticles(res.data.articles.data);
                     setCurrentPage(res.data.articles.current_page);
@@ -101,9 +103,13 @@ const Dashboard: React.FC = () => {
                 }
 
                 if (source === "guardian") {
+                    setGuardianArticles([]);
                     setGuardianArticles(res.data.articles.data);
                     setCurrentPage(res.data.articles.current_page);
                     setLastPage(res.data.articles.last_page);
+                    setTimeout(() => {
+                        console.log(guardianArticles, "guardianArticles");
+                    }, 1200);
                 }
 
                 if (source === "newsapi") {
@@ -131,11 +137,11 @@ const Dashboard: React.FC = () => {
         value: number
     ) => {
         event.preventDefault();
-        setCurrentPage(value);
         triggerSearch({
             ...searchFields,
             current_page: value,
         });
+        setCurrentPage(value);
     };
 
     return (
@@ -160,12 +166,12 @@ const Dashboard: React.FC = () => {
             </Filters>
 
             <ArticlesList>
-                {nytimesArticles.map((nytArticle, index) => (
+                {/* {nytimesArticles.map((nytArticle, index) => (
                     <NYTimesArticle
                         key={nytArticle._id}
                         nytArticle={nytArticle}
                     />
-                ))}
+                ))} */}
                 {guardianArticles.map((guardianArticle, index) => (
                     <TheGuardianArticle
                         key={guardianArticle.id}
@@ -173,9 +179,9 @@ const Dashboard: React.FC = () => {
                     />
                 ))}
 
-                {newsAPIArticles.map((newsapi, index) => (
+                {/* {newsAPIArticles.map((newsapi, index) => (
                     <NewsAPIArticle key={newsapi.title} newsapi={newsapi} />
-                ))}
+                ))} */}
             </ArticlesList>
 
             {nytimesArticles.length > 0 && (
